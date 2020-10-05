@@ -49,5 +49,3 @@ Uses electron-builder to create a distributable version of the app to the folder
 * Build
     * https://webpack.js.org/
     * https://babeljs.io/
-* Database
-    * https://github.com/ax1/a1-database#readme
