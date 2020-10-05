@@ -61,19 +61,23 @@ class AddPropertyForm extends React.Component {
         }
 
         this.props.onPropertyListChange(propriedade)
-        
-        this.setState({ valid: true });
+
+        this.setState({
+            nomeProp: "",
+            luz: false,
+            agua: false,
+            valid: true,
+            msg: ""
+        });
     }
 
     render() {
-
-        let { valid } = this.state.valid;
         return (
             <div>
                 <WarningBanner msg={this.state.msg} valid={this.state.valid}></WarningBanner>
                 <Form onSubmit={this.handleSubmit} >
                     <FormGroup>
-                        <FormControl type='text' placeholder='Nome' onChange={this.handleOnNameChange} value={this.state.nomeProp}></FormControl>
+                        <FormControl type='text' placeholder='Nome propriedade' onChange={this.handleOnNameChange} value={this.state.nomeProp}></FormControl>
                         <div className='overflow-auto' style={{ height: '100px' }}>
                             <FormCheck checked disabled type='checkbox' label='Rendas'></FormCheck>
                             <FormCheck checked disabled type='checkbox' label='Div'></FormCheck>
