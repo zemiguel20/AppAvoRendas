@@ -60,9 +60,8 @@ class AddPropertyForm extends React.Component {
             return;
         }
 
-        // TODO - CALLBACK PARA ADICIONAR AO STATE NO BODY A PROPRIEDADE
-
-
+        this.props.onPropertyListChange(propriedade)
+        
         this.setState({ valid: true });
     }
 

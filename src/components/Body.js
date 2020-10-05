@@ -5,9 +5,27 @@ import AddContractForm from './AddContractForm'
 import AddPropertyForm from './AddPropertyForm'
 import TabelaContratos from './TabelaContratos'
 import TabelaPropriedades from "./TabelaPropriedades";
+import { getAllProperties } from '../backend/Database';
 
 
 class Body extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            year: new Date().getFullYear(),
+            propertiesList: getAllProperties()
+        }
+
+        this.handlePropertyListAdd = this.handlePropertyListAdd.bind(this)
+    }
+
+    handlePropertyListAdd(property) {
+        let propsList = this.state.propertiesList
+        propsList.push(property)
+        this.setState({ propertiesList: propsList })
+    }
+
     render() {
         return (
             <Container fluid className='bg-light'>
@@ -16,10 +34,10 @@ class Body extends React.Component {
                         <YearCounter></YearCounter>
                     </Col>
                     <Col>
-                        <AddContractForm></AddContractForm>
+                        <AddContractForm propertiesList={this.state.propertiesList}></AddContractForm>
                     </Col>
                     <Col>
-                        <AddPropertyForm></AddPropertyForm>
+                        <AddPropertyForm onPropertyListChange={this.handlePropertyListAdd}></AddPropertyForm>
                     </Col>
                     <Col>
                         <Button>Renovar contratos do ano anterior</Button>
