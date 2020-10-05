@@ -34,7 +34,7 @@ class Body extends React.Component {
                         <YearCounter></YearCounter>
                     </Col>
                     <Col>
-                        <AddContractForm propertiesList={this.state.propertiesList}></AddContractForm>
+                        <AddContractForm ano={this.state.year} propertiesList={this.state.propertiesList}></AddContractForm>
                     </Col>
                     <Col>
                         <AddPropertyForm onPropertyListChange={this.handlePropertyListAdd}></AddPropertyForm>
