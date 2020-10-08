@@ -1,20 +1,18 @@
 import fs from 'fs';
 
-const pathProperties = './database/properties.json'
-
 /**
  * Saves property in the database
  * @throws "Propriedade com este nome já existe."
  * @param {Object} property 
  */
 export const saveProperty = (property) => {
-    const fileContent = JSON.parse(openPropertiesFile())
+    const fileContent = JSON.parse(openFile('properties'))
     const result = fileContent.properties.find(el => el.nome === property.nome)
     if (result != undefined) {
         throw "Propriedade com este nome já existe."
     }
     fileContent.properties.push(property)
-    fs.writeFileSync(pathProperties, JSON.stringify(fileContent))
+    fs.writeFileSync(pathFile('properties'), JSON.stringify(fileContent))
 }
 
 /**
@@ -22,19 +20,31 @@ export const saveProperty = (property) => {
  * @return {Array}
  */
 export const getAllProperties = () => {
-    const fileContent = JSON.parse(openPropertiesFile())
+    const fileContent = JSON.parse(openFile('properties'))
     return fileContent.properties
 }
 
-const openPropertiesFile = () => {
+/**
+ * Open file with given file name. If doesnt exist, initialize the file.
+ * @param {string} fileName 
+ */
+const openFile = (fileName) => {
+    const path = pathFile('properties')
     try {
-        return fs.readFileSync(pathProperties)
+        return fs.readFileSync(path)
     } catch (error) {
-        //initialize file
-        const fd = fs.openSync(pathProperties, 'w')
-        fs.writeFileSync(fd, JSON.stringify({ properties: [] }))
+        const fd = fs.openSync(path, 'w')
+        fs.writeFileSync(fd, JSON.stringify({ [fileName]: [] }))
         fs.closeSync(fd)
-
-        return fs.readFileSync(pathProperties)
     }
+
+    return fs.readFileSync(path)
+}
+
+/**
+ * Return string path to given file name.
+ * @param {string} fileName 
+ */
+const pathFile = (fileName) => {
+    return './database/' + fileName + '.json'
 }
