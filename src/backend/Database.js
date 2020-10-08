@@ -17,7 +17,7 @@ export const saveProperty = (property) => {
 
 /**
  * Returns a list with all the properties on the database
- * @return {Array}
+ * @return {Array<object>}
  */
 export const getAllProperties = () => {
     const fileContent = JSON.parse(openFile('properties'))
@@ -40,6 +40,16 @@ export const saveContract = (contract) => {
     }
     fileContent.contracts.push(contract)
     fs.writeFileSync(pathFile('contracts'), JSON.stringify(fileContent))
+}
+
+/**
+ * Returns the list of contracts of the given year.
+ * @param {number} year 
+ * @returns {Array<object>} list of contracts
+ */
+export const getContractsListByYear = (year) => {
+    const fileContent = JSON.parse(openFile('contracts'))
+    return fileContent.contracts.filter(el => el.ano === year)
 }
 
 /**
