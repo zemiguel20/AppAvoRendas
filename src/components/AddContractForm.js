@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, FormCheck, FormControl, FormGroup } from 'react-bootstrap';
 import WarningBanner from './WarningBanner';
+import { saveContract } from '../backend/Database';
 
 class AddContractForm extends React.Component {
     constructor(props) {
@@ -57,7 +58,7 @@ class AddContractForm extends React.Component {
         console.log(JSON.stringify(contrato)); //TODO - for debug, remove after
 
         try {
-            //TODO - save contrato
+            saveContract(contrato)
         } catch (error) {
             this.setState({ valid: false, msg: error })
             return;
