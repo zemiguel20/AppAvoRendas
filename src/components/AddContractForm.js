@@ -64,7 +64,7 @@ class AddContractForm extends React.Component {
             return;
         }
 
-        //TODO - change state by adding contrato
+        this.props.onContractsListChange(contrato)
 
         this.setState({
             valid: true,

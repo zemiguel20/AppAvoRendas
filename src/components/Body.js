@@ -5,25 +5,34 @@ import AddContractForm from './AddContractForm'
 import AddPropertyForm from './AddPropertyForm'
 import TabelaContratos from './TabelaContratos'
 import TabelaPropriedades from "./TabelaPropriedades";
-import { getAllProperties } from '../backend/Database';
+import { getAllProperties, getContractsListByYear } from '../backend/Database';
 
 
 class Body extends React.Component {
 
     constructor(props) {
         super(props)
+        const year = new Date().getFullYear()
         this.state = {
-            year: new Date().getFullYear(),
-            propertiesList: getAllProperties()
+            year: year,
+            propertiesList: getAllProperties(),
+            contractsList: getContractsListByYear(year)
         }
 
         this.handlePropertyListAdd = this.handlePropertyListAdd.bind(this)
+        this.handleContractsListAdd = this.handleContractsListAdd.bind(this)
     }
 
     handlePropertyListAdd(property) {
         let propsList = this.state.propertiesList
         propsList.push(property)
         this.setState({ propertiesList: propsList })
+    }
+
+    handleContractsListAdd(contract) {
+        let contractsList = this.state.contractsList
+        contractsList.push(contract)
+        this.setState({ contractsList: contractsList })
     }
 
     render() {
@@ -34,7 +43,7 @@ class Body extends React.Component {
                         <YearCounter></YearCounter>
                     </Col>
                     <Col>
-                        <AddContractForm ano={this.state.year} propertiesList={this.state.propertiesList}></AddContractForm>
+                        <AddContractForm ano={this.state.year} propertiesList={this.state.propertiesList} onContractsListChange={this.handleContractsListAdd}></AddContractForm>
                     </Col>
                     <Col>
                         <AddPropertyForm onPropertyListChange={this.handlePropertyListAdd}></AddPropertyForm>
@@ -47,7 +56,7 @@ class Body extends React.Component {
                 <Row className='overflow-auto'>
                     <Tabs defaultActiveKey='contratos' id='tabelas'>
                         <Tab title='Contratos' eventKey='contratos'>
-                            <TabelaContratos></TabelaContratos>
+                            <TabelaContratos contractsList={this.state.contractsList}></TabelaContratos>
                         </Tab>
                         <Tab title='Propriedades' eventKey='propriedades'>
                             <TabelaPropriedades></TabelaPropriedades>
