@@ -3,7 +3,7 @@ import fs from 'fs';
 /**
  * Saves property in the database
  * @throws "Propriedade com este nome já existe."
- * @param {Object} property 
+ * @param {object} property 
  */
 export const saveProperty = (property) => {
     const fileContent = JSON.parse(openFile('properties'))
@@ -25,11 +25,29 @@ export const getAllProperties = () => {
 }
 
 /**
+ * Saves contract in the database
+ * @throws "Contrato já existe."
+ * @param {object} contract 
+ */
+export const saveContract = (contract) => {
+    const fileContent = JSON.parse(openFile('contracts'))
+    const result = fileContent.contracts.find(el =>
+        (el.ano === contract.ano
+            && el.nomeInquilino === contract.nomeInquilino
+            && el.nomePropriedade === contract.nomePropriedade))
+    if (result != undefined) {
+        throw "Contrato já existe."
+    }
+    fileContent.contracts.push(contract)
+    fs.writeFileSync(pathFile('contracts'), JSON.stringify(fileContent))
+}
+
+/**
  * Open file with given file name. If doesnt exist, initialize the file.
  * @param {string} fileName 
  */
 const openFile = (fileName) => {
-    const path = pathFile('properties')
+    const path = pathFile(fileName)
     try {
         return fs.readFileSync(path)
     } catch (error) {
