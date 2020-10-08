@@ -16,7 +16,8 @@ class Body extends React.Component {
         this.state = {
             year: year,
             propertiesList: getAllProperties(),
-            contractsList: getContractsListByYear(year)
+            contractsList: getContractsListByYear(year),
+            unsavedChanges: false
         }
 
         this.handlePropertyListAdd = this.handlePropertyListAdd.bind(this)
@@ -52,7 +53,9 @@ class Body extends React.Component {
                         <Button>Renovar contratos do ano anterior</Button>
                     </Col>
                 </Row>
-
+                <Row>
+                    <SaveButton unsavedChanges={this.state.unsavedChanges}></SaveButton>
+                </Row>
                 <Row className='overflow-auto'>
                     <Tabs defaultActiveKey='contratos' id='tabelas'>
                         <Tab title='Contratos' eventKey='contratos'>
@@ -69,3 +72,11 @@ class Body extends React.Component {
 }
 
 export default Body
+
+function SaveButton(props) {
+    if (props.unsavedChanges === true) {
+        return <Button className='btn-success'>Guardar</Button>
+    } else {
+        return <Button disabled className='btn-success'>Guardar</Button>
+    }
+}
