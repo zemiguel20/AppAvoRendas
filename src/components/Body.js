@@ -22,6 +22,7 @@ class Body extends React.Component {
 
         this.handlePropertyListAdd = this.handlePropertyListAdd.bind(this)
         this.handleContractsListAdd = this.handleContractsListAdd.bind(this)
+        this.handleContractPaymentChange = this.handleContractPaymentChange.bind(this)
     }
 
     handlePropertyListAdd(property) {
@@ -34,6 +35,16 @@ class Body extends React.Component {
         let contractsList = this.state.contractsList
         contractsList.push(contract)
         this.setState({ contractsList: contractsList })
+    }
+
+    handleContractPaymentChange(nomeInquilino, nomePropriedade, mes, novoValor) {
+        let num = parseInt(novoValor)
+        let contractList = this.state.contractsList
+        contractList.find(el => (el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)).pagamentos[mes] = num
+        this.setState({
+            contractList: contractList,
+            unsavedChanges: true
+        })
     }
 
     render() {
@@ -59,7 +70,7 @@ class Body extends React.Component {
                 <Row className='overflow-auto'>
                     <Tabs defaultActiveKey='contratos' id='tabelas'>
                         <Tab title='Contratos' eventKey='contratos'>
-                            <TabelaContratos contractsList={this.state.contractsList}></TabelaContratos>
+                            <TabelaContratos contractsList={this.state.contractsList} onContractPaymentChange={this.handleContractPaymentChange}></TabelaContratos>
                         </Tab>
                         <Tab title='Propriedades' eventKey='propriedades'>
                             <TabelaPropriedades></TabelaPropriedades>

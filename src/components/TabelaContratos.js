@@ -30,7 +30,7 @@ class TabelaContratos extends React.Component {
                 <tbody>
                     {
                         this.props.contractsList.map((value) => {
-                            return <ContractTableRow contrato={value}></ContractTableRow>
+                            return <ContractTableRow contrato={value} onContractPaymentChange={this.props.onContractPaymentChange}></ContractTableRow>
                         })
                     }
                 </tbody>
@@ -61,18 +61,18 @@ function ContractTableRow(props) {
             <td> {props.contrato.nomeInquilino} </td>
             <td> {props.contrato.nomePropriedade} </td>
             <td> {props.contrato.valorRenda} </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='jan' value={props.contrato.pagamentos.jan}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='fev' value={props.contrato.pagamentos.fev}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='mar' value={props.contrato.pagamentos.mar}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='abr' value={props.contrato.pagamentos.abr}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='mai' value={props.contrato.pagamentos.mai}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='jun' value={props.contrato.pagamentos.jun}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='jul' value={props.contrato.pagamentos.jul}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='ago' value={props.contrato.pagamentos.ago}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='set' value={props.contrato.pagamentos.set}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='out' value={props.contrato.pagamentos.out}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='nov' value={props.contrato.pagamentos.nov}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='dez' value={props.contrato.pagamentos.dez}></FormControl> </td>
+            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='jan' value={props.contrato.pagamentos.jan} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='fev' value={props.contrato.pagamentos.fev} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='mar' value={props.contrato.pagamentos.mar} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='abr' value={props.contrato.pagamentos.abr} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='mai' value={props.contrato.pagamentos.mai} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='jun' value={props.contrato.pagamentos.jun} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='jul' value={props.contrato.pagamentos.jul} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='ago' value={props.contrato.pagamentos.ago} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='set' value={props.contrato.pagamentos.set} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='out' value={props.contrato.pagamentos.out} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='nov' value={props.contrato.pagamentos.nov} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='dez' value={props.contrato.pagamentos.dez} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
             <td> {calcularPagamentoTotal(props.contrato.pagamentos)} </td>
         </tr>
     );
