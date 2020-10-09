@@ -5,7 +5,7 @@ import AddContractForm from './AddContractForm'
 import AddPropertyForm from './AddPropertyForm'
 import TabelaContratos from './TabelaContratos'
 import TabelaPropriedades from "./TabelaPropriedades";
-import { getAllProperties, getContractsListByYear } from '../backend/Database';
+import { getAllProperties, getContractsListByYear, saveProperties, saveContracts } from '../backend/Database';
 
 
 class Body extends React.Component {
@@ -23,6 +23,7 @@ class Body extends React.Component {
         this.handlePropertyListAdd = this.handlePropertyListAdd.bind(this)
         this.handleContractsListAdd = this.handleContractsListAdd.bind(this)
         this.handleContractPaymentChange = this.handleContractPaymentChange.bind(this)
+        this.handleGuardar = this.handleGuardar.bind(this)
     }
 
     handlePropertyListAdd(property) {
@@ -47,6 +48,12 @@ class Body extends React.Component {
         })
     }
 
+    handleGuardar() {
+        saveContracts(this.state.contractsList)
+        saveProperties(this.state.propertiesList)
+        this.setState({ unsavedChanges: false })
+    }
+
     render() {
         return (
             <Container fluid className='bg-light'>
@@ -65,7 +72,7 @@ class Body extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <SaveButton unsavedChanges={this.state.unsavedChanges}></SaveButton>
+                    <SaveButton unsavedChanges={this.state.unsavedChanges} onClick={this.handleGuardar}></SaveButton>
                 </Row>
                 <Row className='overflow-auto'>
                     <Tabs defaultActiveKey='contratos' id='tabelas'>
@@ -86,8 +93,8 @@ export default Body
 
 function SaveButton(props) {
     if (props.unsavedChanges === true) {
-        return <Button className='btn-success'>Guardar</Button>
+        return <Button className='btn-success' onClick={() => props.onClick()}>Guardar</Button>
     } else {
-        return <Button disabled className='btn-success'>Guardar</Button>
+        return <Button disabled className='btn-outline-success'>Guardar</Button>
     }
 }

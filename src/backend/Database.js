@@ -16,6 +16,26 @@ export const saveProperty = (property) => {
 }
 
 /**
+ * Saves the list of properties in the file.
+ * @param {Array<object>} propertyList 
+ */
+export const saveProperties = (propertyList) => {
+    const fileContent = JSON.parse(openFile('properties'))
+    fileContent.properties = propertyList
+    fs.writeFileSync(pathFile('properties'), JSON.stringify(fileContent))
+}
+
+/**
+ * Saves the list of contracts in the file
+ * @param {Array<object>} contractList 
+ */
+export const saveContracts = (contractList) => {
+    const fileContent = JSON.parse(openFile('contracts'))
+    fileContent.contracts = contractList
+    fs.writeFileSync(pathFile('contracts'), JSON.stringify(fileContent))
+}
+
+/**
  * Returns a list with all the properties on the database
  * @return {Array<object>}
  */
