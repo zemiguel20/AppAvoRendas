@@ -11,8 +11,6 @@ import WarningBanner from './WarningBanner';
 
 class Body extends React.Component {
 
-    //TODO - adicionar uma barra para indicar erros!
-
     constructor(props) {
         super(props)
         const year = new Date().getFullYear()
@@ -34,12 +32,12 @@ class Body extends React.Component {
     handlePropertyListAdd(property) {
 
         if (property.nome.length <= 0) {
-            this.setState({ valid: false, msg: "Nome é obrigatório." })
+            this.setState({ valid: false, msg: "Nome da propriedade é obrigatório." })
             return;
         }
         let propsList = this.state.propertiesList
         if (propsList.find(el => el.nome === property.nome) != undefined) {
-            this.setState({ valid: false, msg: "Propriedade já existe." })
+            this.setState({ valid: false, msg: "Propriedade com este nome já existe." })
             return;
         }
         propsList.push(property)
@@ -47,9 +45,27 @@ class Body extends React.Component {
     }
 
     handleContractsListAdd(contract) {
+
+        if (contract.nomeInquilino.length <= 0) {
+            this.setState({ valid: false, msg: "Nome do inquilino é obrigatório." })
+            return;
+        }
+
+        if (contract.valorRenda === null || isNaN(contract.valorRenda)) {
+            this.setState({ valid: false, msg: "Renda tem de ser um número." })
+            return;
+        }
+
         let contractsList = this.state.contractsList
+        const result = contractsList.find(el =>
+            (el.ano === contract.ano
+                && el.nomeInquilino === contract.nomeInquilino
+                && el.nomePropriedade === contract.nomePropriedade))
+        if (result != undefined) {
+            this.setState({ valid: false, msg: "Contrato com dado inquilino e propriedade já existe." })
+        }
         contractsList.push(contract)
-        this.setState({ contractsList: contractsList })
+        this.setState({ valid: true, contractsList: contractsList, unsavedChanges: true })
     }
 
     handleContractPaymentChange(nomeInquilino, nomePropriedade, mes, novoValor) {
@@ -79,7 +95,7 @@ class Body extends React.Component {
                         <YearCounter></YearCounter>
                     </Col>
                     <Col>
-                        <AddContractForm ano={this.state.year} propertiesList={this.state.propertiesList} onContractsListChange={this.handleContractsListAdd}></AddContractForm>
+                        <AddContractForm ano={this.state.year} propertiesList={this.state.propertiesList} onContractsListAdd={this.handleContractsListAdd}></AddContractForm>
                     </Col>
                     <Col>
                         <AddPropertyForm onPropertyListAdd={this.handlePropertyListAdd}></AddPropertyForm>

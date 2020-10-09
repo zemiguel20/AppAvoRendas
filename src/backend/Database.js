@@ -30,24 +30,6 @@ export const getAllProperties = () => {
 }
 
 /**
- * Saves contract in the database
- * @throws "Contrato já existe."
- * @param {object} contract 
- */
-export const saveContract = (contract) => {
-    const fileContent = JSON.parse(openFile('contracts'))
-    const result = fileContent.contracts.find(el =>
-        (el.ano === contract.ano
-            && el.nomeInquilino === contract.nomeInquilino
-            && el.nomePropriedade === contract.nomePropriedade))
-    if (result != undefined) {
-        throw "Contrato já existe."
-    }
-    fileContent.contracts.push(contract)
-    fs.writeFileSync(pathFile('contracts'), JSON.stringify(fileContent))
-}
-
-/**
  * Returns the list of contracts of the given year.
  * @param {number} year 
  * @returns {Array<object>} list of contracts

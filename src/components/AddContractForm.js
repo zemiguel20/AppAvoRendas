@@ -7,8 +7,6 @@ class AddContractForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            valid: true,
-            msg: '',
             nomeInquilino: '',
             valorRenda: '',
             nomePropriedade: this.props.propertiesList[0].nome,
@@ -32,20 +30,7 @@ class AddContractForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        if (this.state.nomeInquilino.length <= 0) {
-            this.setState({ valid: false, msg: "Nome é obrigatório." })
-            return;
-        }
-
         const valor = parseInt(this.state.valorRenda)
-        console.log(this.state.valorRenda)
-        console.log(valor)
-        if (valor === null || isNaN(valor)) {
-            console.log('CHEGUEI')
-            this.setState({ valid: false, msg: "Renda tem de ser um número." })
-            return;
-        }
-
         const contrato = {
             ano: this.props.ano,
             nomeInquilino: this.state.nomeInquilino,
@@ -57,18 +42,9 @@ class AddContractForm extends React.Component {
 
         console.log(JSON.stringify(contrato)); //TODO - for debug, remove after
 
-        try {
-            saveContract(contrato)
-        } catch (error) {
-            this.setState({ valid: false, msg: error })
-            return;
-        }
-
-        this.props.onContractsListChange(contrato)
+        this.props.onContractsListAdd(contrato)
 
         this.setState({
-            valid: true,
-            msg: '',
             nomeInquilino: '',
             valorRenda: '',
             renovavel: false
@@ -78,24 +54,21 @@ class AddContractForm extends React.Component {
 
     render() {
         return (
-            <div>
-                <WarningBanner msg={this.state.msg} valid={this.state.valid}></WarningBanner>
-                <Form onSubmit={this.handleSubmit}>
-                    <FormGroup>
-                        <FormControl type='text' placeholder='Nome inquilino' name='nomeInquilino' onChange={this.handleOnStringChange} value={this.state.nomeInquilino}></FormControl>
-                        <FormControl type='number' min='0' placeholder='Valor da renda' name='valorRenda' onChange={this.handleOnStringChange} value={this.state.valorRenda}></FormControl>
-                        <FormControl as='select' name='nomePropriedade' onChange={this.handleOnStringChange}>
-                            {
-                                this.props.propertiesList.map((value) => {
-                                    return <option>{value.nome}</option>
-                                })
-                            }
-                        </FormControl>
-                        <FormCheck type='checkbox' label='Contrato renovável' onChange={this.handleOnCheckboxChange}></FormCheck>
-                    </FormGroup>
-                    <Button type='submit'>Adicionar Contrato</Button>
-                </Form>
-            </div>
+            <Form onSubmit={this.handleSubmit}>
+                <FormGroup>
+                    <FormControl type='text' placeholder='Nome inquilino' name='nomeInquilino' onChange={this.handleOnStringChange} value={this.state.nomeInquilino}></FormControl>
+                    <FormControl type='number' min='0' placeholder='Valor da renda' name='valorRenda' onChange={this.handleOnStringChange} value={this.state.valorRenda}></FormControl>
+                    <FormControl as='select' name='nomePropriedade' onChange={this.handleOnStringChange}>
+                        {
+                            this.props.propertiesList.map((value) => {
+                                return <option>{value.nome}</option>
+                            })
+                        }
+                    </FormControl>
+                    <FormCheck type='checkbox' label='Contrato renovável' onChange={this.handleOnCheckboxChange}></FormCheck>
+                </FormGroup>
+                <Button type='submit'>Adicionar Contrato</Button>
+            </Form>
         );
     }
 }
