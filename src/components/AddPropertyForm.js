@@ -1,7 +1,5 @@
 import React from 'react';
 import { Button, Form, FormCheck, FormControl, FormGroup } from 'react-bootstrap';
-import WarningBanner from './WarningBanner';
-import { saveProperty } from '../backend/Database';
 class AddPropertyForm extends React.Component {
 
     constructor(props) {
@@ -10,8 +8,6 @@ class AddPropertyForm extends React.Component {
             nomeProp: "",
             luz: false,
             agua: false,
-            valid: true,
-            msg: ""
         };
 
         this.handleOnParamChange = this.handleOnParamChange.bind(this);
@@ -33,11 +29,6 @@ class AddPropertyForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        if (this.state.nomeProp.length <= 0) {
-            this.setState({ valid: false, msg: "Nome é obrigatório." })
-            return;
-        }
-
         const propriedade = {
             'nome': this.state.nomeProp,
             'params': ['rendas', 'div', 'obs']
@@ -53,42 +44,30 @@ class AddPropertyForm extends React.Component {
 
         console.log(JSON.stringify(propriedade)); //TODO - for debug, remove after
 
-        try {
-            saveProperty(propriedade)
-        } catch (error) {
-            this.setState({ valid: false, msg: error })
-            return;
-        }
-
-        this.props.onPropertyListChange(propriedade)
+        this.props.onPropertyListAdd(propriedade)
 
         this.setState({
             nomeProp: "",
             luz: false,
-            agua: false,
-            valid: true,
-            msg: ""
+            agua: false
         });
     }
 
     render() {
         return (
-            <div>
-                <WarningBanner msg={this.state.msg} valid={this.state.valid}></WarningBanner>
-                <Form onSubmit={this.handleSubmit} >
-                    <FormGroup>
-                        <FormControl type='text' placeholder='Nome propriedade' onChange={this.handleOnNameChange} value={this.state.nomeProp}></FormControl>
-                        <div className='overflow-auto' style={{ height: '100px' }}>
-                            <FormCheck checked disabled type='checkbox' label='Rendas'></FormCheck>
-                            <FormCheck checked disabled type='checkbox' label='Div'></FormCheck>
-                            <FormCheck checked disabled type='checkbox' label='Obs'></FormCheck>
-                            <FormCheck type='checkbox' name='luz' label='Luz' onChange={this.handleOnParamChange}></FormCheck>
-                            <FormCheck type='checkbox' name='agua' label='Agua' onChange={this.handleOnParamChange}></FormCheck>
-                        </div>
-                        <Button type='submit'>Adicionar Propriedade</Button>
-                    </FormGroup>
-                </Form >
-            </div >
+            <Form onSubmit={this.handleSubmit} >
+                <FormGroup>
+                    <FormControl type='text' placeholder='Nome propriedade' onChange={this.handleOnNameChange} value={this.state.nomeProp}></FormControl>
+                    <div className='overflow-auto' style={{ height: '100px' }}>
+                        <FormCheck checked disabled type='checkbox' label='Rendas'></FormCheck>
+                        <FormCheck checked disabled type='checkbox' label='Div'></FormCheck>
+                        <FormCheck checked disabled type='checkbox' label='Obs'></FormCheck>
+                        <FormCheck type='checkbox' name='luz' label='Luz' onChange={this.handleOnParamChange}></FormCheck>
+                        <FormCheck type='checkbox' name='agua' label='Agua' onChange={this.handleOnParamChange}></FormCheck>
+                    </div>
+                    <Button type='submit'>Adicionar Propriedade</Button>
+                </FormGroup>
+            </Form >
         );
     }
 }

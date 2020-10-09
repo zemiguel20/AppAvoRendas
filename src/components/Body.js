@@ -6,14 +6,19 @@ import AddPropertyForm from './AddPropertyForm'
 import TabelaContratos from './TabelaContratos'
 import TabelaPropriedades from "./TabelaPropriedades";
 import { getAllProperties, getContractsListByYear, saveProperties, saveContracts } from '../backend/Database';
+import WarningBanner from './WarningBanner';
 
 
 class Body extends React.Component {
+
+    //TODO - adicionar uma barra para indicar erros!
 
     constructor(props) {
         super(props)
         const year = new Date().getFullYear()
         this.state = {
+            msg: "",
+            valid: true,
             year: year,
             propertiesList: getAllProperties(),
             contractsList: getContractsListByYear(year),
@@ -27,9 +32,18 @@ class Body extends React.Component {
     }
 
     handlePropertyListAdd(property) {
+
+        if (property.nome.length <= 0) {
+            this.setState({ valid: false, msg: "Nome é obrigatório." })
+            return;
+        }
         let propsList = this.state.propertiesList
+        if (propsList.find(el => el.nome === property.nome) != undefined) {
+            this.setState({ valid: false, msg: "Propriedade já existe." })
+            return;
+        }
         propsList.push(property)
-        this.setState({ propertiesList: propsList })
+        this.setState({ valid: true, propertiesList: propsList, unsavedChanges: true })
     }
 
     handleContractsListAdd(contract) {
@@ -58,6 +72,9 @@ class Body extends React.Component {
         return (
             <Container fluid className='bg-light'>
                 <Row>
+                    <WarningBanner msg={this.state.msg} valid={this.state.valid}></WarningBanner>
+                </Row>
+                <Row>
                     <Col>
                         <YearCounter></YearCounter>
                     </Col>
@@ -65,7 +82,7 @@ class Body extends React.Component {
                         <AddContractForm ano={this.state.year} propertiesList={this.state.propertiesList} onContractsListChange={this.handleContractsListAdd}></AddContractForm>
                     </Col>
                     <Col>
-                        <AddPropertyForm onPropertyListChange={this.handlePropertyListAdd}></AddPropertyForm>
+                        <AddPropertyForm onPropertyListAdd={this.handlePropertyListAdd}></AddPropertyForm>
                     </Col>
                     <Col>
                         <Button>Renovar contratos do ano anterior</Button>

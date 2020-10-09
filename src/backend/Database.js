@@ -1,21 +1,6 @@
 import fs from 'fs';
 
 /**
- * Saves property in the database
- * @throws "Propriedade com este nome já existe."
- * @param {object} property 
- */
-export const saveProperty = (property) => {
-    const fileContent = JSON.parse(openFile('properties'))
-    const result = fileContent.properties.find(el => el.nome === property.nome)
-    if (result != undefined) {
-        throw "Propriedade com este nome já existe."
-    }
-    fileContent.properties.push(property)
-    fs.writeFileSync(pathFile('properties'), JSON.stringify(fileContent))
-}
-
-/**
  * Saves the list of properties in the file.
  * @param {Array<object>} propertyList 
  */
