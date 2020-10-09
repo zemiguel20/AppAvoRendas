@@ -27,6 +27,7 @@ class Body extends React.Component {
         this.handleContractsListAdd = this.handleContractsListAdd.bind(this)
         this.handleContractPaymentChange = this.handleContractPaymentChange.bind(this)
         this.handleGuardar = this.handleGuardar.bind(this)
+        this.handleToggleRenovavel = this.handleToggleRenovavel.bind(this)
     }
 
     handlePropertyListAdd(property) {
@@ -78,6 +79,16 @@ class Body extends React.Component {
         })
     }
 
+    handleToggleRenovavel(nomeInquilino, nomePropriedade, value) {
+        console.log(value) //TODO - DEBUG REMOVE
+        let contractList = this.state.contractsList
+        contractList.find(el => (el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)).renovavel = value
+        this.setState({
+            contractList: contractList,
+            unsavedChanges: true
+        })
+    }
+
     handleGuardar() {
         saveContracts(this.state.contractsList)
         saveProperties(this.state.propertiesList)
@@ -110,7 +121,7 @@ class Body extends React.Component {
                 <Row className='overflow-auto'>
                     <Tabs defaultActiveKey='contratos' id='tabelas'>
                         <Tab title='Contratos' eventKey='contratos'>
-                            <TabelaContratos contractsList={this.state.contractsList} onContractPaymentChange={this.handleContractPaymentChange}></TabelaContratos>
+                            <TabelaContratos contractsList={this.state.contractsList} onContractPaymentChange={this.handleContractPaymentChange} onToggleRenovavel={this.handleToggleRenovavel}></TabelaContratos>
                         </Tab>
                         <Tab title='Propriedades' eventKey='propriedades'>
                             <TabelaPropriedades></TabelaPropriedades>

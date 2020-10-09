@@ -30,7 +30,7 @@ class TabelaContratos extends React.Component {
                 <tbody>
                     {
                         this.props.contractsList.map((value) => {
-                            return <ContractTableRow contrato={value} onContractPaymentChange={this.props.onContractPaymentChange}></ContractTableRow>
+                            return <ContractTableRow contrato={value} onContractPaymentChange={this.props.onContractPaymentChange} onToggleRenovavel={this.props.onToggleRenovavel}></ContractTableRow>
                         })
                     }
                 </tbody>
@@ -54,10 +54,15 @@ function ContractTableRow(props) {
         return soma
     }
 
+    const handleToggleRenovavel = (event) => {
+        console.log('HELLO MF')//TODO -DEBUG REMOVE
+        props.onToggleRenovavel(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.checked)
+    }
+
     return (
         <tr>
             <td> <Button variant='outline-danger'>X</Button> </td>
-            <td> <CheckBox checked={props.contrato.renovavel}></CheckBox> </td>
+            <td> <CheckBox checked={props.contrato.renovavel} onToggleRenovavel={handleToggleRenovavel}></CheckBox> </td>
             <td> {props.contrato.nomeInquilino} </td>
             <td> {props.contrato.nomePropriedade} </td>
             <td> {props.contrato.valorRenda} </td>
@@ -82,8 +87,8 @@ function ContractTableRow(props) {
 
 function CheckBox(props) {
     if (props.checked === true) {
-        return <FormCheck checked type='checkbox' size='lg'></FormCheck>
+        return <FormCheck checked type='checkbox' size='lg' onChange={(event) => props.onToggleRenovavel(event)}></FormCheck>
     } else {
-        return <FormCheck type='checkbox' size='lg'></FormCheck>
+        return <FormCheck type='checkbox' size='lg' onChange={(event) => props.onToggleRenovavel(event)}></FormCheck>
     }
 }
