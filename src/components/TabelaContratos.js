@@ -59,25 +59,23 @@ function ContractTableRow(props) {
         props.onToggleRenovavel(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.checked)
     }
 
+    const { contrato } = props;
+    const { nomeInquilino, renovavel, nomePropriedade, valorRenda, pagamentos } = contrato;
+
+    const meses = Object.keys(pagamentos)
+
     return (
         <tr>
             <td> <Button variant='outline-danger'>X</Button> </td>
-            <td> <CheckBox checked={props.contrato.renovavel} onToggleRenovavel={handleToggleRenovavel}></CheckBox> </td>
-            <td> {props.contrato.nomeInquilino} </td>
-            <td> {props.contrato.nomePropriedade} </td>
-            <td> {props.contrato.valorRenda} </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='jan' value={props.contrato.pagamentos.jan} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='fev' value={props.contrato.pagamentos.fev} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='mar' value={props.contrato.pagamentos.mar} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='abr' value={props.contrato.pagamentos.abr} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='mai' value={props.contrato.pagamentos.mai} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='jun' value={props.contrato.pagamentos.jun} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='jul' value={props.contrato.pagamentos.jul} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='ago' value={props.contrato.pagamentos.ago} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='set' value={props.contrato.pagamentos.set} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='out' value={props.contrato.pagamentos.out} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='nov' value={props.contrato.pagamentos.nov} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
-            <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name='dez' value={props.contrato.pagamentos.dez} onChange={(event) => props.onContractPaymentChange(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+            <td> <CheckBox checked={renovavel} onToggleRenovavel={handleToggleRenovavel}></CheckBox> </td>
+            <td> {nomeInquilino} </td>
+            <td> {nomePropriedade} </td>
+            <td> {valorRenda} </td>
+            {
+                meses.map(mes => {
+                    return <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name={mes} value={pagamentos[mes]} onChange={(event) => props.onContractPaymentChange(nomeInquilino, nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+                })
+            }
             <td> {calcularPagamentoTotal(props.contrato.pagamentos)} </td>
         </tr>
     );
