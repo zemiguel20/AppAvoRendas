@@ -16,7 +16,14 @@ export const saveProperties = (propertyList) => {
  */
 export const saveContracts = (contractList) => {
     const fileContent = JSON.parse(openFile('contracts'))
-    fileContent.contracts = contractList
+    contractList.forEach(contract => {
+        const resultIndex = fileContent.contracts.findIndex(el => (el.ano === contract.ano && el.nomeInquilino === contract.nomeInquilino && el.nomePropriedade === contract.nomePropriedade))
+        if (resultIndex === -1) {
+            fileContent.contracts.push(contract)
+        } else {
+            fileContent.contracts[resultIndex] = contract
+        }
+    });
     fs.writeFileSync(pathFile('contracts'), JSON.stringify(fileContent))
 }
 
