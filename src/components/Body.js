@@ -27,6 +27,7 @@ class Body extends React.Component {
         this.handleContractPaymentChange = this.handleContractPaymentChange.bind(this)
         this.handleGuardar = this.handleGuardar.bind(this)
         this.handleToggleRenovavel = this.handleToggleRenovavel.bind(this)
+        this.handleYearChange = this.handleYearChange.bind(this)
     }
 
     handlePropertyListAdd(property) {
@@ -88,6 +89,16 @@ class Body extends React.Component {
         })
     }
 
+    handleYearChange(year) {
+        if (this.state.unsavedChanges === true) {
+            this.handleGuardar()
+        }
+        this.setState({
+            year: year,
+            contractsList: getContractsListByYear(year)
+        })
+    }
+
     handleGuardar() {
         saveContracts([].concat(this.state.contractsList))
         saveProperties([].concat(this.state.propertiesList))
@@ -106,7 +117,7 @@ class Body extends React.Component {
                 }
                 <Row>
                     <Col>
-                        <YearCounter></YearCounter>
+                        <YearCounter ano={this.state.year} onYearChange={this.handleYearChange}></YearCounter>
                     </Col>
                     <Col>
                         <AddContractForm ano={this.state.year} propertiesList={this.state.propertiesList} onContractsListAdd={this.handleContractsListAdd}></AddContractForm>
