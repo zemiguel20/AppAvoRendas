@@ -15,8 +15,7 @@ class Body extends React.Component {
         super(props)
         const year = new Date().getFullYear()
         this.state = {
-            msg: "",
-            valid: true,
+            msg: null,
             year: year,
             propertiesList: getAllProperties(),
             contractsList: getContractsListByYear(year),
@@ -33,45 +32,45 @@ class Body extends React.Component {
     handlePropertyListAdd(property) {
 
         if (property.nome.length <= 0) {
-            this.setState({ valid: false, msg: "Nome da propriedade é obrigatório." })
+            this.setState({ msg: "Nome da propriedade é obrigatório." })
             return;
         }
-        let propsList = this.state.propertiesList
+        let propsList = [].concat(this.state.propertiesList)
         if (propsList.find(el => el.nome === property.nome) != undefined) {
-            this.setState({ valid: false, msg: "Propriedade com este nome já existe." })
+            this.setState({ msg: "Propriedade com este nome já existe." })
             return;
         }
         propsList.push(property)
-        this.setState({ valid: true, propertiesList: propsList, unsavedChanges: true })
+        this.setState({ msg: null, propertiesList: propsList, unsavedChanges: true })
     }
 
     handleContractsListAdd(contract) {
 
         if (contract.nomeInquilino.length <= 0) {
-            this.setState({ valid: false, msg: "Nome do inquilino é obrigatório." })
+            this.setState({ msg: "Nome do inquilino é obrigatório." })
             return;
         }
 
         if (contract.valorRenda === null || isNaN(contract.valorRenda)) {
-            this.setState({ valid: false, msg: "Renda tem de ser um número." })
+            this.setState({ msg: "Renda tem de ser um número." })
             return;
         }
 
-        let contractsList = this.state.contractsList
+        let contractsList = [].concat(this.state.contractsList)
         const result = contractsList.find(el =>
             (el.ano === contract.ano
                 && el.nomeInquilino === contract.nomeInquilino
                 && el.nomePropriedade === contract.nomePropriedade))
         if (result != undefined) {
-            this.setState({ valid: false, msg: "Contrato com dado inquilino e propriedade já existe." })
+            this.setState({ msg: "Contrato com dado inquilino e propriedade já existe." })
         }
         contractsList.push(contract)
-        this.setState({ valid: true, contractsList: contractsList, unsavedChanges: true })
+        this.setState({ msg: null, contractsList: contractsList, unsavedChanges: true })
     }
 
     handleContractPaymentChange(nomeInquilino, nomePropriedade, mes, novoValor) {
         let num = parseInt(novoValor)
-        let contractList = this.state.contractsList
+        let contractList = [].concat(this.state.contractsList)
         contractList.find(el => (el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)).pagamentos[mes] = num
         this.setState({
             contractList: contractList,
@@ -81,7 +80,7 @@ class Body extends React.Component {
 
     handleToggleRenovavel(nomeInquilino, nomePropriedade, value) {
         console.log(value) //TODO - DEBUG REMOVE
-        let contractList = this.state.contractsList
+        let contractList = [].concat(this.state.contractsList)
         contractList.find(el => (el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)).renovavel = value
         this.setState({
             contractList: contractList,
@@ -90,17 +89,21 @@ class Body extends React.Component {
     }
 
     handleGuardar() {
-        saveContracts(this.state.contractsList)
-        saveProperties(this.state.propertiesList)
+        saveContracts([].concat(this.state.contractsList))
+        saveProperties([].concat(this.state.propertiesList))
         this.setState({ unsavedChanges: false })
     }
 
     render() {
         return (
             <Container fluid className='bg-light'>
-                <Row>
-                    <WarningBanner msg={this.state.msg} valid={this.state.valid}></WarningBanner>
-                </Row>
+                {this.state.msg &&
+                    <Row>
+
+                        <WarningBanner msg={this.state.msg}></WarningBanner>
+
+                    </Row>
+                }
                 <Row>
                     <Col>
                         <YearCounter></YearCounter>
