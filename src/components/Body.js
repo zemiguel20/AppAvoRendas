@@ -28,6 +28,7 @@ class Body extends React.Component {
         this.handleGuardar = this.handleGuardar.bind(this)
         this.handleToggleRenovavel = this.handleToggleRenovavel.bind(this)
         this.handleYearChange = this.handleYearChange.bind(this)
+        this.handleRenovarContratos = this.handleRenovarContratos.bind(this)
     }
 
     handlePropertyListAdd(property) {
@@ -105,6 +106,22 @@ class Body extends React.Component {
         this.setState({ unsavedChanges: false })
     }
 
+    handleRenovarContratos() {
+        let unsavedChanges = false
+        const renovavelList = getContractsListByYear(this.state.year - 1).filter(el => el.renovavel === true)
+        const contractList = [].concat(this.state.contractsList)
+        renovavelList.forEach(contract => {
+            const result = contractList.find(el => (el.nomeInquilino === contract.nomeInquilino && el.nomePropriedade === contract.nomePropriedade))
+            if (result === undefined) {
+                contract.ano = this.state.year
+                contractList.push(contract)
+                unsavedChanges = true
+            }
+        });
+        console.log(contractList) //TODO - remove debug
+        this.setState({ contractsList: contractList, unsavedChanges: unsavedChanges })
+    }
+
     render() {
         return (
             <Container fluid className='bg-light'>
@@ -126,7 +143,7 @@ class Body extends React.Component {
                         <AddPropertyForm onPropertyListAdd={this.handlePropertyListAdd}></AddPropertyForm>
                     </Col>
                     <Col>
-                        <Button>Renovar contratos do ano anterior</Button>
+                        <Button onClick={this.handleRenovarContratos}>Renovar contratos do ano anterior</Button>
                     </Col>
                 </Row>
                 <Row>
