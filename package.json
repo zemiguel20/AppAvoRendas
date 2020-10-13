@@ -12,7 +12,8 @@
   },
   "scripts": {
     "start": "electron .",
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js --mode=development",
+    "build-prod": "webpack --config webpack.config.js --mode=production",
     "dist": "electron-builder -c.extraMetadata.main='./main.js'"
   },
   "devDependencies": {
