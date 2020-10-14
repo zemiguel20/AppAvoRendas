@@ -7,6 +7,7 @@ import TabelaContratos from './TabelaContratos'
 import TabelaPropriedades from "./TabelaPropriedades";
 import { getAllProperties, getContractsListByYear, saveProperties, saveContracts } from '../backend/Database';
 import WarningBanner from './WarningBanner';
+import { clone } from '../utils';
 
 
 class Body extends React.Component {
@@ -37,7 +38,7 @@ class Body extends React.Component {
             this.setState({ msg: "Nome da propriedade é obrigatório." })
             return;
         }
-        let propsList = [].concat(this.state.propertiesList)
+        let propsList = clone(this.state.propertiesList)
         if (propsList.find(el => el.nome === property.nome) != undefined) {
             this.setState({ msg: "Propriedade com este nome já existe." })
             return;
@@ -58,7 +59,7 @@ class Body extends React.Component {
             return;
         }
 
-        let contractsList = [].concat(this.state.contractsList)
+        let contractsList = clone(this.state.contractsList)
         const result = contractsList.find(el =>
             (el.ano === contract.ano
                 && el.nomeInquilino === contract.nomeInquilino
@@ -72,20 +73,20 @@ class Body extends React.Component {
 
     handleContractPaymentChange(nomeInquilino, nomePropriedade, mes, novoValor) {
         let num = parseInt(novoValor)
-        let contractList = [].concat(this.state.contractsList)
-        contractList.find(el => (el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)).pagamentos[mes] = num
+        let contractsList = clone(this.state.contractsList)
+        contractsList.find(el => (el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)).pagamentos[mes] = num
         this.setState({
-            contractList: contractList,
+            contractsList: contractsList,
             unsavedChanges: true
         })
     }
 
     handleToggleRenovavel(nomeInquilino, nomePropriedade, value) {
         console.log(value) //TODO - DEBUG REMOVE
-        let contractList = [].concat(this.state.contractsList)
-        contractList.find(el => (el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)).renovavel = value
+        let contractsList = clone(this.state.contractsList)
+        contractsList.find(el => (el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)).renovavel = value
         this.setState({
-            contractList: contractList,
+            contractsList: contractsList,
             unsavedChanges: true
         })
     }
@@ -101,25 +102,25 @@ class Body extends React.Component {
     }
 
     handleGuardar() {
-        saveContracts([].concat(this.state.contractsList))
-        saveProperties([].concat(this.state.propertiesList))
+        saveContracts(clone(this.state.contractsList))
+        saveProperties(clone(this.state.propertiesList))
         this.setState({ unsavedChanges: false })
     }
 
     handleRenovarContratos() {
         let unsavedChanges = false
         const renovavelList = getContractsListByYear(this.state.year - 1).filter(el => el.renovavel === true)
-        const contractList = [].concat(this.state.contractsList)
+        const contractsList = clone(this.state.contractsList)
         renovavelList.forEach(contract => {
-            const result = contractList.find(el => (el.nomeInquilino === contract.nomeInquilino && el.nomePropriedade === contract.nomePropriedade))
+            const result = contractsList.find(el => (el.nomeInquilino === contract.nomeInquilino && el.nomePropriedade === contract.nomePropriedade))
             if (result === undefined) {
                 contract.ano = this.state.year
-                contractList.push(contract)
+                contractsList.push(contract)
                 unsavedChanges = true
             }
         });
-        console.log(contractList) //TODO - remove debug
-        this.setState({ contractsList: contractList, unsavedChanges: unsavedChanges })
+        console.log(contractsList) //TODO - remove debug
+        this.setState({ contractsList: contractsList, unsavedChanges: unsavedChanges })
     }
 
     render() {
@@ -149,7 +150,7 @@ class Body extends React.Component {
                 <Row>
                     <SaveButton unsavedChanges={this.state.unsavedChanges} onClick={this.handleGuardar}></SaveButton>
                 </Row>
-                <Row className='overflow-auto'>
+                <Row className='overflow-auto' style={{ maxHeight: '500px' }}>
                     <Tabs defaultActiveKey='contratos' id='tabelas'>
                         <Tab title='Contratos' eventKey='contratos'>
                             <TabelaContratos contractsList={this.state.contractsList} onContractPaymentChange={this.handleContractPaymentChange} onToggleRenovavel={this.handleToggleRenovavel}></TabelaContratos>
