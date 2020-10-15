@@ -9,7 +9,6 @@ class AddContractForm extends React.Component {
         this.state = {
             nomeInquilino: '',
             valorRenda: '',
-            nomePropriedade: this.props.propertiesList[0].nome,
             renovavel: false
         }
         this.handleOnStringChange = this.handleOnStringChange.bind(this);
@@ -29,12 +28,11 @@ class AddContractForm extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
         const valor = parseInt(this.state.valorRenda)
         const contrato = {
             ano: this.props.ano,
             nomeInquilino: this.state.nomeInquilino,
-            nomePropriedade: this.state.nomePropriedade,
+            nomePropriedade: event.target.children[2].value,
             valorRenda: valor,
             renovavel: this.state.renovavel,
             pagamentos: { jan: 0, fev: 0, mar: 0, abr: 0, mai: 0, jun: 0, jul: 0, ago: 0, set: 0, out: 0, nov: 0, dez: 0 }
@@ -55,18 +53,16 @@ class AddContractForm extends React.Component {
     render() {
         return (
             <Form onSubmit={this.handleSubmit}>
-                <FormGroup>
-                    <FormControl type='text' placeholder='Nome inquilino' name='nomeInquilino' onChange={this.handleOnStringChange} value={this.state.nomeInquilino}></FormControl>
-                    <FormControl type='number' min='0' placeholder='Valor da renda' name='valorRenda' onChange={this.handleOnStringChange} value={this.state.valorRenda}></FormControl>
-                    <FormControl as='select' name='nomePropriedade' onChange={this.handleOnStringChange}>
-                        {
-                            this.props.propertiesList.map((value) => {
-                                return <option>{value.nome}</option>
-                            })
-                        }
-                    </FormControl>
-                    <FormCheck type='checkbox' label='Contrato renovável' onChange={this.handleOnCheckboxChange}></FormCheck>
-                </FormGroup>
+                <FormControl type='text' placeholder='Nome inquilino' name='nomeInquilino' onChange={this.handleOnStringChange} value={this.state.nomeInquilino}></FormControl>
+                <FormControl type='number' min='0' placeholder='Valor da renda' name='valorRenda' onChange={this.handleOnStringChange} value={this.state.valorRenda}></FormControl>
+                <FormControl as='select' name='nomePropriedade' onChange={this.handleOnStringChange}>
+                    {
+                        this.props.propertiesList.map((value) => {
+                            return <option>{value.nome}</option>
+                        })
+                    }
+                </FormControl>
+                <FormCheck type='checkbox' label='Contrato renovável' onChange={this.handleOnCheckboxChange}></FormCheck>
                 <Button type='submit'>Adicionar Contrato</Button>
             </Form>
         );

@@ -68,5 +68,5 @@ const openFile = (fileName) => {
  * @param {string} fileName 
  */
 const pathFile = (fileName) => {
-    return './database/' + fileName + '.json'
+    return './' + fileName + '.json'
 }
