@@ -156,7 +156,7 @@ class Body extends React.Component {
                             <TabelaContratos contractsList={this.state.contractsList} onContractPaymentChange={this.handleContractPaymentChange} onToggleRenovavel={this.handleToggleRenovavel}></TabelaContratos>
                         </Tab>
                         <Tab title='Propriedades' eventKey='propriedades'>
-                            <TabelaPropriedades></TabelaPropriedades>
+                            <TabelaPropriedades propertiesList={this.state.propertiesList} contractsList={this.state.contractsList}></TabelaPropriedades>
                         </Tab>
                     </Tabs>
                 </Row>
