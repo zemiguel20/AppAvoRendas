@@ -28,6 +28,23 @@ export const saveContracts = (contractList) => {
 }
 
 /**
+ * Saves the list of receitas in the file
+ * @param {Array<object>} receitasList 
+ */
+export const saveReceitas = (receitasList) => {
+    const fileContent = JSON.parse(openFile('receitas'))
+    receitasList.forEach(receita => {
+        const resultIndex = fileContent.receitas.findIndex(el => (el.ano === receita.ano && el.nomePropriedade === receita.nomePropriedade && el.param === receita.param))
+        if (resultIndex === -1) {
+            fileContent.receitas.push(receita)
+        } else {
+            fileContent.receitas[resultIndex] = receita
+        }
+    });
+    fs.writeFileSync(pathFile('receitas'), JSON.stringify(fileContent))
+}
+
+/**
  * Returns a list with all the properties on the database
  * @return {Array<object>}
  */
@@ -44,6 +61,16 @@ export const getAllProperties = () => {
 export const getContractsListByYear = (year) => {
     const fileContent = JSON.parse(openFile('contracts'))
     return fileContent.contracts.filter(el => el.ano === year)
+}
+
+/**
+ * Returns the list of receitas of the given year.
+ * @param {number} year 
+ * @returns {Array<object>} list of receitas
+ */
+export const getReceitasListByYear = (year) => {
+    const fileContent = JSON.parse(openFile('receitas'))
+    return fileContent.receitas.filter(el => el.ano === year)
 }
 
 /**
