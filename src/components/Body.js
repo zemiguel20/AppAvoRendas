@@ -74,9 +74,8 @@ class Body extends React.Component {
     }
 
     handleContractPaymentChange(nomeInquilino, nomePropriedade, mes, novoValor) {
-        let num = parseInt(novoValor)
         let contractsList = clone(this.state.contractsList)
-        contractsList.find(el => (el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)).pagamentos[mes] = num
+        contractsList.find(el => (el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)).pagamentos[mes] = novoValor
         this.setState({
             contractsList: contractsList,
             unsavedChanges: true

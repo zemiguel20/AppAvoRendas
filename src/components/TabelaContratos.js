@@ -48,21 +48,30 @@ function ContractTableRow(props) {
         let soma = 0
         const months = Object.keys(pagamentos)
         months.forEach(month => {
-            soma += parseInt(pagamentos[month])
+            let valor = parseInt(pagamentos[month])
+            if (isNaN(valor))
+                valor = 0
+            soma += valor
         });
 
         return soma
     }
 
-    const handleToggleRenovavel = (event) => {
-        console.log('HELLO MF')//TODO -DEBUG REMOVE
-        props.onToggleRenovavel(props.contrato.nomeInquilino, props.contrato.nomePropriedade, event.target.checked)
-    }
 
-    const { contrato } = props;
+
+    const { contrato, onContractPaymentChange } = props;
     const { nomeInquilino, renovavel, nomePropriedade, valorRenda, pagamentos } = contrato;
 
     const meses = Object.keys(pagamentos)
+
+    const handleToggleRenovavel = (event) => {
+        console.log('HELLO MF')//TODO -DEBUG REMOVE
+        props.onToggleRenovavel(nomeInquilino, nomePropriedade, event.target.checked)
+    }
+
+    const handleContractPaymentChange = (event) => {
+        onContractPaymentChange(nomeInquilino, nomePropriedade, event.target.name, event.target.value)
+    }
 
     return (
         <tr>
@@ -73,7 +82,7 @@ function ContractTableRow(props) {
             <td> {valorRenda} </td>
             {
                 meses.map(mes => {
-                    return <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name={mes} value={pagamentos[mes]} onChange={(event) => props.onContractPaymentChange(nomeInquilino, nomePropriedade, event.target.name, event.target.value)}></FormControl> </td>
+                    return <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name={mes} value={pagamentos[mes]} onChange={handleContractPaymentChange}></FormControl> </td>
                 })
             }
             <td> {calcularPagamentoTotal(props.contrato.pagamentos)} </td>

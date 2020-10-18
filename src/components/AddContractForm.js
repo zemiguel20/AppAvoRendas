@@ -35,7 +35,7 @@ class AddContractForm extends React.Component {
             nomePropriedade: event.target.children[2].value,
             valorRenda: valor,
             renovavel: this.state.renovavel,
-            pagamentos: { jan: 0, fev: 0, mar: 0, abr: 0, mai: 0, jun: 0, jul: 0, ago: 0, set: 0, out: 0, nov: 0, dez: 0 }
+            pagamentos: { jan: '', fev: '', mar: '', abr: '', mai: '', jun: '', jul: '', ago: '', set: '', out: '', nov: '', dez: '' }
         }
 
         console.log(JSON.stringify(contrato)); //TODO - for debug, remove after

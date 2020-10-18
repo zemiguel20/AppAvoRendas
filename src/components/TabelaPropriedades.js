@@ -37,7 +37,10 @@ const TableRow = (props) => {
 
             contractsList.forEach(contract => {
                 meses.forEach(mes => {
-                    soma += contract.pagamentos[mes]
+                    let valor = parseInt(contract.pagamentos[mes])
+                    if (isNaN(valor))
+                        valor = 0
+                    soma += valor
                 });
             });
             console.log("Total " + param + " " + soma) //TODO - REMOVE DEBUG
@@ -92,7 +95,10 @@ const TableRow = (props) => {
                         meses.map(mes => {
                             let soma = 0
                             contractsList.forEach(contract => {
-                                soma += contract.pagamentos[mes]
+                                let valor = parseInt(contract.pagamentos[mes])
+                                if (isNaN(valor))
+                                    valor = 0
+                                soma += valor
                             });
                             return <td>{soma}</td>
                         })
