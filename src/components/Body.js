@@ -5,7 +5,7 @@ import AddContractForm from './AddContractForm'
 import AddPropertyForm from './AddPropertyForm'
 import TabelaContratos from './TabelaContratos'
 import TabelaPropriedades from "./TabelaPropriedades";
-import { getAllProperties, getContractsListByYear, saveProperties, saveContracts } from '../backend/Database';
+import { getAllProperties, getContractsListByYear, getReceitasListByYear, saveProperties, saveContracts, saveReceitas } from '../backend/Database';
 import WarningBanner from './WarningBanner';
 import { clone } from '../utils';
 
@@ -20,6 +20,7 @@ class Body extends React.Component {
             year: year,
             propertiesList: getAllProperties(),
             contractsList: getContractsListByYear(year),
+            receitasList: getReceitasListByYear(year),
             unsavedChanges: false
         }
 
@@ -30,6 +31,7 @@ class Body extends React.Component {
         this.handleToggleRenovavel = this.handleToggleRenovavel.bind(this)
         this.handleYearChange = this.handleYearChange.bind(this)
         this.handleRenovarContratos = this.handleRenovarContratos.bind(this)
+        this.handleReceitaChange = this.handleReceitaChange.bind(this)
     }
 
     handlePropertyListAdd(property) {
@@ -97,13 +99,15 @@ class Body extends React.Component {
         }
         this.setState({
             year: year,
-            contractsList: getContractsListByYear(year)
+            contractsList: getContractsListByYear(year),
+            receitasList: getReceitasListByYear(year)
         })
     }
 
     handleGuardar() {
         saveContracts(clone(this.state.contractsList))
         saveProperties(clone(this.state.propertiesList))
+        saveReceitas(clone(this.state.receitasList))
         this.setState({ unsavedChanges: false })
     }
 
@@ -121,6 +125,19 @@ class Body extends React.Component {
         });
         console.log(contractsList) //TODO - remove debug
         this.setState({ contractsList: contractsList, unsavedChanges: unsavedChanges })
+    }
+
+    handleReceitaChange(nomePropriedade, param, mes, valor) {
+        console.log(nomePropriedade + " " + param + " " + mes + " " + valor) //TODO -REMOVE DEBUG
+        const receitasList = clone(this.state.receitasList)
+        let result = receitasList.find(receita => (receita.nomePropriedade === nomePropriedade && receita.param === param))
+        if (result === undefined) {
+            result = { ano: this.state.year, nomePropriedade: nomePropriedade, param: param, valores: { jan: '', fev: '', mar: '', abr: '', mai: '', jun: '', jul: '', ago: '', set: '', out: '', nov: '', dez: '' } }
+            receitasList.push(result)
+        }
+        result.valores[mes] = valor
+        console.log(result) //TODO - REMOVE DEBUG
+        this.setState({ receitasList: receitasList, unsavedChanges: true })
     }
 
     render() {
@@ -156,7 +173,7 @@ class Body extends React.Component {
                             <TabelaContratos contractsList={this.state.contractsList} onContractPaymentChange={this.handleContractPaymentChange} onToggleRenovavel={this.handleToggleRenovavel}></TabelaContratos>
                         </Tab>
                         <Tab title='Propriedades' eventKey='propriedades'>
-                            <TabelaPropriedades propertiesList={this.state.propertiesList} contractsList={this.state.contractsList}></TabelaPropriedades>
+                            <TabelaPropriedades propertiesList={this.state.propertiesList} contractsList={this.state.contractsList} receitasList={this.state.receitasList} onReceitaChange={this.handleReceitaChange}></TabelaPropriedades>
                         </Tab>
                     </Tabs>
                 </Row>
