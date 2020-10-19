@@ -16,6 +16,7 @@ class Body extends React.Component {
         super(props)
         const year = new Date().getFullYear()
         this.state = {
+            tabAtivo: 'receitas',
             msg: null,
             year: year,
             propertiesList: getAllProperties(),
@@ -142,39 +143,68 @@ class Body extends React.Component {
     render() {
         return (
             <Container fluid className='bg-light'>
-                {this.state.msg &&
-                    <Row>
-
-                        <WarningBanner msg={this.state.msg}></WarningBanner>
-
-                    </Row>
-                }
-                <Row>
+                <Row className='pt-3'>
                     <Col>
                         <YearCounter ano={this.state.year} onYearChange={this.handleYearChange}></YearCounter>
                     </Col>
                     <Col>
-                        <AddContractForm ano={this.state.year} propertiesList={this.state.propertiesList} onContractsListAdd={this.handleContractsListAdd}></AddContractForm>
+                        <Tabs defaultActiveKey='receitas' id='tabelas'>
+                            <Tab title='Receitas/Propriedades' eventKey='receitas' onEnter={() => {
+                                console.log('receitas tab') // TODO - REMOVE DEBUG
+                                this.setState({ tabAtivo: 'receitas' })
+                            }}>
+
+                            </Tab>
+                            <Tab title='Contratos' eventKey='contratos' onEnter={() => {
+                                console.log('contratos tab') // TODO - REMOVE DEBUG
+                                this.setState({ tabAtivo: 'contratos' })
+                            }}>
+                            </Tab>
+
+
+                        </Tabs>
                     </Col>
                     <Col>
-                        <AddPropertyForm onPropertyListAdd={this.handlePropertyListAdd}></AddPropertyForm>
+                        <SaveButton unsavedChanges={this.state.unsavedChanges} onClick={this.handleGuardar}></SaveButton>
                     </Col>
+                </Row>
+                {this.state.msg &&
+                    <Row className='pt-3'>
+                        <Col>
+                            <WarningBanner msg={this.state.msg}></WarningBanner>
+                        </Col>
+                    </Row>
+                }
+                <Row className='mt-3' md={3}>
+                    {this.state.tabAtivo === 'contratos' &&
+                        <Col>
+                            <AddContractForm ano={this.state.year} propertiesList={this.state.propertiesList} onContractsListAdd={this.handleContractsListAdd}></AddContractForm>
+                        </Col>
+                    }
+
+                    {this.state.tabAtivo === 'contratos' &&
+                        <Col>
+                            <Button onClick={this.handleRenovarContratos}>Renovar contratos do ano anterior</Button>
+                        </Col>
+                    }
+
+                    {this.state.tabAtivo === 'receitas' &&
+                        <Col>
+                            <AddPropertyForm onPropertyListAdd={this.handlePropertyListAdd}></AddPropertyForm>
+                        </Col>
+                    }
+
+                </Row>
+
+                <Row className='mt-3 overflow-auto' style={{ height: '600px' }}>
                     <Col>
-                        <Button onClick={this.handleRenovarContratos}>Renovar contratos do ano anterior</Button>
-                    </Col>
-                </Row>
-                <Row>
-                    <SaveButton unsavedChanges={this.state.unsavedChanges} onClick={this.handleGuardar}></SaveButton>
-                </Row>
-                <Row className='overflow-auto' style={{ maxHeight: '500px' }}>
-                    <Tabs defaultActiveKey='contratos' id='tabelas'>
-                        <Tab title='Contratos' eventKey='contratos'>
+                        {this.state.tabAtivo === 'contratos' &&
                             <TabelaContratos contractsList={this.state.contractsList} onContractPaymentChange={this.handleContractPaymentChange} onToggleRenovavel={this.handleToggleRenovavel}></TabelaContratos>
-                        </Tab>
-                        <Tab title='Propriedades' eventKey='propriedades'>
+                        }
+                        {this.state.tabAtivo === 'receitas' &&
                             <TabelaPropriedades propertiesList={this.state.propertiesList} contractsList={this.state.contractsList} receitasList={this.state.receitasList} onReceitaChange={this.handleReceitaChange}></TabelaPropriedades>
-                        </Tab>
-                    </Tabs>
+                        }
+                    </Col>
                 </Row>
             </Container>
         );
@@ -185,8 +215,8 @@ export default Body
 
 function SaveButton(props) {
     if (props.unsavedChanges === true) {
-        return <Button className='btn-success' onClick={() => props.onClick()}>Guardar</Button>
+        return <Button className='btn-success' size='lg' onClick={() => props.onClick()}>Guardar</Button>
     } else {
-        return <Button disabled className='btn-outline-success'>Guardar</Button>
+        return <Button disabled className='btn-outline-success' size='lg'>Guardar</Button>
     }
 }

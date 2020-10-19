@@ -55,10 +55,10 @@ class AddPropertyForm extends React.Component {
 
     render() {
         return (
-            <Form onSubmit={this.handleSubmit} >
+            <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
                     <FormControl type='text' placeholder='Nome propriedade' onChange={this.handleOnNameChange} value={this.state.nomeProp}></FormControl>
-                    <div className='overflow-auto' style={{ height: '100px' }}>
+                    <div className='overflow-auto' style={{ maxHeight: '200px' }}>
                         <FormCheck checked disabled type='checkbox' label='Rendas'></FormCheck>
                         <FormCheck checked disabled type='checkbox' label='Div'></FormCheck>
                         <FormCheck checked disabled type='checkbox' label='Obs'></FormCheck>
