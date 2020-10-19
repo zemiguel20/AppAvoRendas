@@ -33,6 +33,7 @@ class Body extends React.Component {
         this.handleYearChange = this.handleYearChange.bind(this)
         this.handleRenovarContratos = this.handleRenovarContratos.bind(this)
         this.handleReceitaChange = this.handleReceitaChange.bind(this)
+        this.handleContractRemove = this.handleContractRemove.bind(this)
     }
 
     handlePropertyListAdd(property) {
@@ -140,6 +141,13 @@ class Body extends React.Component {
         this.setState({ receitasList: receitasList, unsavedChanges: true })
     }
 
+    handleContractRemove(nomeInquilino, nomePropriedade) {
+        const contractsList = clone(this.state.contractsList)
+        const index = contractsList.find(el => el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)
+        contractsList.splice(index, 1)
+        this.setState({ contractsList: contractsList, unsavedChanges: true })
+    }
+
     render() {
         return (
             <Container fluid className='bg-light'>
@@ -199,7 +207,7 @@ class Body extends React.Component {
                 <Row className='mt-3 overflow-auto' style={{ height: '600px' }}>
                     <Col>
                         {this.state.tabAtivo === 'contratos' &&
-                            <TabelaContratos contractsList={this.state.contractsList} onContractPaymentChange={this.handleContractPaymentChange} onToggleRenovavel={this.handleToggleRenovavel}></TabelaContratos>
+                            <TabelaContratos contractsList={this.state.contractsList} onContractPaymentChange={this.handleContractPaymentChange} onToggleRenovavel={this.handleToggleRenovavel} onContractRemove={this.handleContractRemove}></TabelaContratos>
                         }
                         {this.state.tabAtivo === 'receitas' &&
                             <TabelaPropriedades propertiesList={this.state.propertiesList} contractsList={this.state.contractsList} receitasList={this.state.receitasList} onReceitaChange={this.handleReceitaChange}></TabelaPropriedades>

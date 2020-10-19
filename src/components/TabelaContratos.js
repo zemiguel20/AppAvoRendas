@@ -30,7 +30,7 @@ class TabelaContratos extends React.Component {
                 <tbody>
                     {
                         this.props.contractsList.map((value) => {
-                            return <ContractTableRow contrato={value} onContractPaymentChange={this.props.onContractPaymentChange} onToggleRenovavel={this.props.onToggleRenovavel}></ContractTableRow>
+                            return <ContractTableRow contrato={value} onContractPaymentChange={this.props.onContractPaymentChange} onToggleRenovavel={this.props.onToggleRenovavel} onContractRemove={this.props.onContractRemove}></ContractTableRow>
                         })
                     }
                 </tbody>
@@ -59,7 +59,7 @@ function ContractTableRow(props) {
 
 
 
-    const { contrato, onContractPaymentChange } = props;
+    const { contrato, onContractPaymentChange, onContractRemove } = props;
     const { nomeInquilino, renovavel, nomePropriedade, valorRenda, pagamentos } = contrato;
 
     const meses = Object.keys(pagamentos)
@@ -73,9 +73,13 @@ function ContractTableRow(props) {
         onContractPaymentChange(nomeInquilino, nomePropriedade, event.target.name, event.target.value)
     }
 
+    const handleContractRemove = (event) => {
+        onContractRemove(nomeInquilino, nomePropriedade)
+    }
+
     return (
         <tr>
-            <td> <Button variant='outline-danger'>X</Button> </td>
+            <td> <Button variant='outline-danger' onClick={handleContractRemove}>X</Button> </td>
             <td> <CheckBox checked={renovavel} onToggleRenovavel={handleToggleRenovavel}></CheckBox> </td>
             <td> {nomeInquilino} </td>
             <td> {nomePropriedade} </td>
