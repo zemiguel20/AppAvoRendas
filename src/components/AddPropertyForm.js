@@ -7,7 +7,7 @@ class AddPropertyForm extends React.Component {
         this.state = {
             nomeProp: "",
             luz: false,
-            agua: false,
+            pessoal: false,
         };
 
         this.handleOnParamChange = this.handleOnParamChange.bind(this);
@@ -49,7 +49,7 @@ class AddPropertyForm extends React.Component {
         this.setState({
             nomeProp: "",
             luz: false,
-            agua: false
+            pessoal: false
         });
     }
 
@@ -58,13 +58,11 @@ class AddPropertyForm extends React.Component {
             <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
                     <FormControl type='text' placeholder='Nome propriedade' onChange={this.handleOnNameChange} value={this.state.nomeProp}></FormControl>
-                    <div className='overflow-auto' style={{ maxHeight: '200px' }}>
-                        <FormCheck checked disabled type='checkbox' label='Rendas'></FormCheck>
-                        <FormCheck checked disabled type='checkbox' label='Div'></FormCheck>
-                        <FormCheck checked disabled type='checkbox' label='Obs'></FormCheck>
-                        <FormCheck type='checkbox' name='luz' label='Luz' onChange={this.handleOnParamChange}></FormCheck>
-                        <FormCheck type='checkbox' name='agua' label='Agua' onChange={this.handleOnParamChange}></FormCheck>
-                    </div>
+                    <FormCheck checked disabled type='checkbox' label='Rendas'></FormCheck>
+                    <FormCheck checked disabled type='checkbox' label='Div'></FormCheck>
+                    <FormCheck checked disabled type='checkbox' label='Obs'></FormCheck>
+                    <FormCheck type='checkbox' name='luz' label='Luz' onChange={this.handleOnParamChange}></FormCheck>
+                    <FormCheck type='checkbox' name='pessoal' label='Pessoal' onChange={this.handleOnParamChange}></FormCheck>
                     <Button type='submit'>Adicionar Propriedade</Button>
                 </FormGroup>
             </Form >
