@@ -17,6 +17,9 @@ Starts the electron processes which load the files from `build` folder. BUILD CO
 
 Use `webpack` to build the project. Output to `build` folder. 
 
+### `yarn build-prod`
+
+Use `webpack` to build the project FOR PRODUCTION. Output to `build` folder. 
 
 ### `yarn dist`
 
