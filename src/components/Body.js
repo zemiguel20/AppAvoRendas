@@ -176,7 +176,7 @@ class Body extends React.Component {
                     </Col>
                     <Col>
                         <Tabs defaultActiveKey='receitas' id='tabelas'>
-                            <Tab title='Receitas/Propriedades' eventKey='receitas' onEnter={() => {
+                            <Tab title='Propriedades' eventKey='receitas' onEnter={() => {
                                 console.log('receitas tab') // TODO - REMOVE DEBUG
                                 this.setState({ tabAtivo: 'receitas' })
                             }}>

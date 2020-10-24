@@ -48,7 +48,7 @@ function ContractTableRow(props) {
         let soma = 0
         const months = Object.keys(pagamentos)
         months.forEach(month => {
-            let valor = parseInt(pagamentos[month])
+            let valor = parseFloat(pagamentos[month])
             if (isNaN(valor))
                 valor = 0
             soma += valor
@@ -86,7 +86,7 @@ function ContractTableRow(props) {
             <td> {valorRenda} </td>
             {
                 meses.map(mes => {
-                    return <td> <FormControl type='number' min='0' style={{ minWidth: '100px' }} name={mes} value={pagamentos[mes]} onChange={handleContractPaymentChange}></FormControl> </td>
+                    return <td> <FormControl type='number' min='0' style={{ minWidth: '105px' }} name={mes} value={pagamentos[mes]} onChange={handleContractPaymentChange}></FormControl> </td>
                 })
             }
             <td> {calcularPagamentoTotal(props.contrato.pagamentos)} </td>

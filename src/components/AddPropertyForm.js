@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, FormCheck, FormControl, FormGroup } from 'react-bootstrap';
+import { Button, Form, FormCheck, FormControl, FormGroup, FormLabel } from 'react-bootstrap';
 class AddPropertyForm extends React.Component {
 
     constructor(props) {
@@ -55,8 +55,9 @@ class AddPropertyForm extends React.Component {
 
     render() {
         return (
-            <Form onSubmit={this.handleSubmit}>
+            <Form onSubmit={this.handleSubmit} style={{ backgroundColor: '#e6f2e1' }}>
                 <FormGroup>
+                    <FormLabel>Adicionar propriedade</FormLabel>
                     <FormControl type='text' placeholder='Nome propriedade' onChange={this.handleOnNameChange} value={this.state.nomeProp}></FormControl>
                     <FormCheck checked disabled type='checkbox' label='Rendas'></FormCheck>
                     <FormCheck checked disabled type='checkbox' label='Div'></FormCheck>

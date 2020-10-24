@@ -37,7 +37,7 @@ const TableRow = (props) => {
 
             contractsList.forEach(contract => {
                 meses.forEach(mes => {
-                    let valor = parseInt(contract.pagamentos[mes])
+                    let valor = parseFloat(contract.pagamentos[mes])
                     if (isNaN(valor))
                         valor = 0
                     soma += valor
@@ -49,7 +49,7 @@ const TableRow = (props) => {
             const receita = receitasList.find(el => el.param === param)
             if (receita != undefined) {
                 meses.forEach(mes => {
-                    let valor = parseInt(receita.valores[mes])
+                    let valor = parseFloat(receita.valores[mes])
                     if (isNaN(valor))
                         valor = 0
                     soma += valor
@@ -95,7 +95,7 @@ const TableRow = (props) => {
                         meses.map(mes => {
                             let soma = 0
                             contractsList.forEach(contract => {
-                                let valor = parseInt(contract.pagamentos[mes])
+                                let valor = parseFloat(contract.pagamentos[mes])
                                 if (isNaN(valor))
                                     valor = 0
                                 soma += valor

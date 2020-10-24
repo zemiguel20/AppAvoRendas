@@ -13,7 +13,7 @@ export function RemoveProperty(props) {
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} style={{ backgroundColor: '#e6f2e1' }}>
             <FormLabel>Remover uma propriedade</FormLabel>
             <FormControl type='text' placeholder='Nome da propriedade'></FormControl>
             <Button type='submit'>Remover</Button>
