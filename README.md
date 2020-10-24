@@ -52,3 +52,5 @@ Uses electron-builder to create a distributable version of the app to the folder
 * Build
     * https://webpack.js.org/
     * https://babeljs.io/
+* Utils
+    * https://lodash.com/docs/4.17.15
