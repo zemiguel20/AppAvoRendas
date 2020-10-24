@@ -8,6 +8,8 @@ import TabelaPropriedades from "./TabelaPropriedades";
 import { getAllProperties, getContractsListByYear, getReceitasListByYear, saveProperties, saveContracts, saveReceitas } from '../backend/Database';
 import WarningBanner from './WarningBanner';
 import { clone } from '../utils';
+import { RemoveProperty } from './RemoveProperty';
+import _ from 'lodash';
 
 
 class Body extends React.Component {
@@ -34,6 +36,7 @@ class Body extends React.Component {
         this.handleRenovarContratos = this.handleRenovarContratos.bind(this)
         this.handleReceitaChange = this.handleReceitaChange.bind(this)
         this.handleContractRemove = this.handleContractRemove.bind(this)
+        this.handlePropertyRemove = this.handlePropertyRemove.bind(this)
     }
 
     handlePropertyListAdd(property) {
@@ -148,6 +151,22 @@ class Body extends React.Component {
         this.setState({ contractsList: contractsList, unsavedChanges: true })
     }
 
+    handlePropertyRemove(nomePropriedade) {
+        console.log(nomePropriedade) //TODO - REMOVE DEBUG
+        const propertiesList = clone(this.state.propertiesList)
+        const property = propertiesList.find(p => p.nome === nomePropriedade)
+        if (property === undefined) {
+            this.setState({ msg: "Propriedade não encontrada." })
+            return;
+        }
+        const receitasList = clone(this.state.receitasList)
+        _.remove(propertiesList, p => p.nome === nomePropriedade)
+        _.remove(receitasList, rec => rec.nomePropriedade === nomePropriedade)
+
+        this.setState({ propertiesList: propertiesList, receitasList: receitasList, unsavedChanges: true })
+
+    }
+
     render() {
         return (
             <Container fluid className='bg-light'>
@@ -199,6 +218,12 @@ class Body extends React.Component {
                     {this.state.tabAtivo === 'receitas' &&
                         <Col>
                             <AddPropertyForm onPropertyListAdd={this.handlePropertyListAdd}></AddPropertyForm>
+                        </Col>
+                    }
+
+                    {this.state.tabAtivo === 'receitas' &&
+                        <Col>
+                            <RemoveProperty onPropertyRemove={this.handlePropertyRemove}></RemoveProperty>
                         </Col>
                     }
 
