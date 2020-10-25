@@ -60,6 +60,14 @@ const TableRow = (props) => {
         return soma
     }
 
+    const calcularDespesas = () => {
+        let soma = 0
+        paramsInputNumericos.forEach(param => {
+            soma += calcularTotal(param)
+        });
+        return soma
+    }
+
     const handleReceitaChange = (event) => {
 
         event.preventDefault();
@@ -71,6 +79,10 @@ const TableRow = (props) => {
         onReceitaChange(nome, dataset.param, dataset.mes, value)
 
     }
+
+
+    const totalDespesas = calcularDespesas()
+    const totalReceitas = calcularTotal('rendas')
 
     return (
         <Table bordered>
@@ -103,7 +115,7 @@ const TableRow = (props) => {
                             return <td>{soma}</td>
                         })
                     }
-                    <td>{calcularTotal('rendas')}</td>
+                    <td>{totalReceitas}</td>
                 </tr>
                 {
                     paramsInputNumericos.map(param => {
@@ -139,6 +151,11 @@ const TableRow = (props) => {
                             return <td><FormControl as='textarea' style={{ minWidth: '150px' }} data-param='obs' data-mes={mes} value={valor} onChange={handleReceitaChange}></FormControl></td>
                         })
                     }
+                </tr>
+                <tr>
+                    <td style={{ backgroundColor: '#dff0f5' }}>{'Receitas: ' + totalReceitas}</td>
+                    <td style={{ backgroundColor: '#dff0f5' }}>{'Despesas: ' + totalDespesas}</td>
+                    <td style={{ backgroundColor: '#dff0f5' }}>{'Saldo: ' + (totalReceitas - totalDespesas)}</td>
                 </tr>
             </tbody>
         </Table>
