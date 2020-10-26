@@ -17,7 +17,7 @@ export function RemoveProperty(props) {
             <FormLabel>Remover uma propriedade</FormLabel>
             <FormControl type='text' placeholder='Nome da propriedade'></FormControl>
             <Button type='submit'>Remover</Button>
-            <FormText>!ATENÇÃO! Os contratos associados à propriedade removida não são apagados, mas não influenciam o cálculo do saldo final.</FormText>
-        </Form>
+            <FormText style={{ fontWeight: 'bold' }}>!ATENÇÃO! Os contratos e despesas/receitas associados à propriedade removida não são apagados, mas não influenciam o cálculo do saldo final. Assim se a propriedade for readicionada, os valores voltam a ter efeito.</FormText>
+        </Form >
     )
 }

@@ -120,7 +120,7 @@ class Body extends React.Component {
     handleGuardar() {
         saveContracts(clone(this.state.contractsList), this.state.year)
         saveProperties(clone(this.state.propertiesList))
-        saveDespesas(clone(this.state.despesasList))
+        saveDespesas(clone(this.state.despesasList), this.state.year)
         saveImpostos(clone(this.state.impostos))
         this.setState({ unsavedChanges: false })
     }
@@ -168,11 +168,9 @@ class Body extends React.Component {
             this.setState({ msg: "Propriedade não encontrada." })
             return;
         }
-        const despesasList = clone(this.state.despesasList)
         _.remove(propertiesList, p => p.nome === nomePropriedade)
-        _.remove(despesasList, rec => rec.nomePropriedade === nomePropriedade)
 
-        this.setState({ propertiesList: propertiesList, despesasList: despesasList, unsavedChanges: true, msg: null })
+        this.setState({ propertiesList: propertiesList, unsavedChanges: true, msg: null })
 
     }
 

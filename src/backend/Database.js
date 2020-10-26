@@ -29,16 +29,13 @@ export const saveContracts = (contractList, year) => {
  * Saves the list of despesas in the file
  * @param {Array<object>} despesasList 
  */
-export const saveDespesas = (despesasList) => {
+export const saveDespesas = (despesasList, year) => {
+    console.log(year)
     const fileContent = JSON.parse(openFile('despesas'))
-    despesasList.forEach(despesa => {
-        const resultIndex = fileContent.despesas.findIndex(el => (el.ano === despesa.ano && el.nomePropriedade === despesa.nomePropriedade && el.param === despesa.param))
-        if (resultIndex === -1) {
-            fileContent.despesas.push(despesa)
-        } else {
-            fileContent.despesas[resultIndex] = despesa
-        }
-    });
+    remove(fileContent.despesas, el => el.ano === year)
+    console.log('AFTER REMOVE: \n' + fileContent.despesas)
+    fileContent.despesas = concat(fileContent.despesas, despesasList)
+    console.log('CONCAT: \n' + fileContent.despesas)
     fs.writeFileSync(pathFile('despesas'), JSON.stringify(fileContent))
 }
 
