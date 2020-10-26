@@ -43,7 +43,6 @@ const TableRow = (props) => {
                     soma += valor
                 });
             });
-            console.log("Total " + param + " " + soma) //TODO - REMOVE DEBUG
 
         } else {
             const despesa = despesasList.find(el => el.param === param)
@@ -71,8 +70,6 @@ const TableRow = (props) => {
     const handleDespesaChange = (event) => {
 
         event.preventDefault();
-
-        console.log(event.target) //TODO - DEBUG remove
 
         const { dataset, value } = event.target
 

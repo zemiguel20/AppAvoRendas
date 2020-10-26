@@ -94,7 +94,6 @@ class Body extends React.Component {
     }
 
     handleToggleRenovavel(nomeInquilino, nomePropriedade, value) {
-        console.log(value) //TODO - DEBUG REMOVE
         let contractsList = clone(this.state.contractsList)
         contractsList.find(el => (el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)).renovavel = value
         this.setState({
@@ -135,12 +134,10 @@ class Body extends React.Component {
                 unsavedChanges = true
             }
         });
-        console.log(contractsList) //TODO - remove debug
         this.setState({ contractsList: contractsList, unsavedChanges: unsavedChanges })
     }
 
     handleDespesaChange(nomePropriedade, param, mes, valor) {
-        console.log(nomePropriedade + " " + param + " " + mes + " " + valor) //TODO -REMOVE DEBUG
         const despesasList = clone(this.state.despesasList)
         let result = despesasList.find(despesa => (despesa.nomePropriedade === nomePropriedade && despesa.param === param))
         if (result === undefined) {
@@ -148,7 +145,6 @@ class Body extends React.Component {
             despesasList.push(result)
         }
         result.valores[mes] = valor
-        console.log(result) //TODO - REMOVE DEBUG
         this.setState({ despesasList: despesasList, unsavedChanges: true })
     }
 
@@ -159,7 +155,6 @@ class Body extends React.Component {
     }
 
     handlePropertyRemove(nomePropriedade) {
-        console.log(nomePropriedade) //TODO - REMOVE DEBUG
         const propertiesList = clone(this.state.propertiesList)
         const property = propertiesList.find(p => p.nome === nomePropriedade)
         if (property === undefined) {
@@ -173,7 +168,6 @@ class Body extends React.Component {
     }
 
     handleImpostosChange(imi, irs) {
-        console.log('IMI:' + imi + ' IRS:' + irs) //TODO - REMOVE DEBUG
         const impostos = clone(this.state.impostos)
         impostos.imi = imi
         impostos.irs = irs
@@ -190,19 +184,16 @@ class Body extends React.Component {
                     <Col>
                         <Tabs defaultActiveKey='despesas' id='tabelas' style={{ maxWidth: 'max-content', borderStyle: 'solid', borderColor: '#828282', backgroundColor: '#fafafa', opacity: 0.93 }}>
                             <Tab title='Propriedades' eventKey='despesas' onEnter={() => {
-                                console.log('despesas tab') // TODO - REMOVE DEBUG
                                 this.setState({ tabAtivo: 'despesas' })
                             }}>
 
                             </Tab>
                             <Tab title='Contratos' eventKey='contratos' onEnter={() => {
-                                console.log('contratos tab') // TODO - REMOVE DEBUG
                                 this.setState({ tabAtivo: 'contratos' })
                             }}>
                             </Tab>
 
                             <Tab title='Resultado' eventKey='resultado' onEnter={() => {
-                                console.log('resultado tab') //TODO - REMOVE DEBUG
                                 this.setState({ tabAtivo: 'resultado' })
                             }}></Tab>
 

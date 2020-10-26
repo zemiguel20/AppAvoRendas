@@ -18,7 +18,6 @@ class YearCounter extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        console.log(event.target.children[0].value) //TODO -DEBUG REMOVE
         let value = parseInt(event.target.children[0].value)
         if (isNaN(value) === false) {
             this.props.onYearChange(parseInt(value))

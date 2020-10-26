@@ -17,12 +17,10 @@ class AddContractForm extends React.Component {
     }
 
     handleOnStringChange(event) {
-        console.log(event.target.value); //TODO - for defug, remove after
         this.setState({ [event.target.name]: event.target.value })
     }
 
     handleOnCheckboxChange(event) {
-        console.log(event.target.checked) //TODO - for defug, remove after
         this.setState({ renovavel: event.target.checked })
     }
 
@@ -37,8 +35,6 @@ class AddContractForm extends React.Component {
             renovavel: this.state.renovavel,
             pagamentos: { jan: '', fev: '', mar: '', abr: '', mai: '', jun: '', jul: '', ago: '', set: '', out: '', nov: '', dez: '' }
         }
-
-        console.log(JSON.stringify(contrato)); //TODO - for debug, remove after
 
         this.props.onContractsListAdd(contrato)
 

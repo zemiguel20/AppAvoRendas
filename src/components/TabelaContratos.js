@@ -67,7 +67,6 @@ function ContractTableRow(props) {
     const meses = Object.keys(pagamentos)
 
     const handleToggleRenovavel = (event) => {
-        console.log('HELLO MF')//TODO -DEBUG REMOVE
         props.onToggleRenovavel(nomeInquilino, nomePropriedade, event.target.checked)
     }
 

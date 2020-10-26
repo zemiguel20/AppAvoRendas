@@ -16,13 +16,10 @@ class AddPropertyForm extends React.Component {
     }
 
     handleOnNameChange(event) {
-        console.log(event.target.value); //TODO - for defug, remove after
         this.setState({ 'nomeProp': event.target.value })
     }
 
     handleOnParamChange(event) {
-        console.log(event.target.checked) //TODO - for defug, remove after
-        console.log(event.target.name) //TODO - for defug, remove after
         this.setState({ [event.target.name]: event.target.checked })
     }
 
@@ -41,8 +38,6 @@ class AddPropertyForm extends React.Component {
                 propriedade.params.splice(1, 0, param);
             }
         }
-
-        console.log(JSON.stringify(propriedade)); //TODO - for debug, remove after
 
         this.props.onPropertyListAdd(propriedade)
 
