@@ -45,6 +45,21 @@ export const saveReceitas = (receitasList) => {
 }
 
 /**
+ * Saves the impostos
+ * @param {object} impostos 
+ */
+export const saveImpostos = (impostos) => {
+    const fileContent = JSON.parse(openFile('impostos'))
+    const resultIndex = fileContent.impostos.findIndex(el => el.ano === impostos.ano)
+    if (resultIndex === -1) {
+        fileContent.impostos.push(impostos)
+    } else {
+        fileContent.impostos[resultIndex] = impostos
+    }
+    fs.writeFileSync(pathFile('impostos'), JSON.stringify(fileContent))
+}
+
+/**
  * Returns a list with all the properties on the database
  * @return {Array<object>}
  */
@@ -71,6 +86,22 @@ export const getContractsListByYear = (year) => {
 export const getReceitasListByYear = (year) => {
     const fileContent = JSON.parse(openFile('receitas'))
     return fileContent.receitas.filter(el => el.ano === year)
+}
+
+/**
+ * Returns the taxes values for the given year.
+ * If they dont exist yet, returns taxes with values 0.
+ * @param {number} year 
+ * @returns {object} impostos
+ */
+export const getImpostosByYear = (year) => {
+    const fileContent = JSON.parse(openFile('impostos'))
+
+    let result = fileContent.impostos.find(el => el.ano === year)
+    if (result === undefined)
+        result = { ano: year, imi: '0', irs: '0' }
+
+    return result
 }
 
 /**
