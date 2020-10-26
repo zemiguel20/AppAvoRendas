@@ -184,7 +184,7 @@ class Body extends React.Component {
 
     render() {
         return (
-            <Container fluid className='bg-light'>
+            <Container fluid className='bg-light' style={{ height: '100vh' }}>
                 <Row className='pt-3'>
                     <Col>
                         <YearCounter ano={this.state.year} onYearChange={this.handleYearChange}></YearCounter>
@@ -248,7 +248,7 @@ class Body extends React.Component {
 
                 </Row>
 
-                <Row className='mt-3 overflow-auto' style={{ height: '600px' }}>
+                <Row className='mt-3 overflow-auto' style={{ maxHeight: '50%' }}>
                     <Col>
                         {this.state.tabAtivo === 'contratos' &&
                             <TabelaContratos contractsList={this.state.contractsList} onContractPaymentChange={this.handleContractPaymentChange} onToggleRenovavel={this.handleToggleRenovavel} onContractRemove={this.handleContractRemove}></TabelaContratos>
