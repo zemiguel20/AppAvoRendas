@@ -8,8 +8,8 @@ class TabelaPropriedades extends Component {
                 {
                     this.props.propertiesList.map(property => {
                         const contracts = this.props.contractsList.filter(contract => contract.nomePropriedade === property.nome)
-                        const receitas = this.props.receitasList.filter(receita => receita.nomePropriedade === property.nome)
-                        return <TableRow nome={property.nome} params={property.params} contractsList={contracts} receitasList={receitas} onReceitaChange={this.props.onReceitaChange}></TableRow>
+                        const despesas = this.props.despesasList.filter(despesa => despesa.nomePropriedade === property.nome)
+                        return <TableRow nome={property.nome} params={property.params} contractsList={contracts} despesasList={despesas} onDespesaChange={this.props.onDespesaChange}></TableRow>
                     })
                 }
             </Container>
@@ -23,7 +23,7 @@ export default TabelaPropriedades;
 
 const TableRow = (props) => {
 
-    const { nome, params, contractsList, receitasList, onReceitaChange } = props
+    const { nome, params, contractsList, despesasList, onDespesaChange } = props
 
     const paramsInputNumericos = params.filter(param => param != 'rendas' && param != 'obs')
 
@@ -46,10 +46,10 @@ const TableRow = (props) => {
             console.log("Total " + param + " " + soma) //TODO - REMOVE DEBUG
 
         } else {
-            const receita = receitasList.find(el => el.param === param)
-            if (receita != undefined) {
+            const despesa = despesasList.find(el => el.param === param)
+            if (despesa != undefined) {
                 meses.forEach(mes => {
-                    let valor = parseFloat(receita.valores[mes])
+                    let valor = parseFloat(despesa.valores[mes])
                     if (isNaN(valor))
                         valor = 0
                     soma += valor
@@ -68,7 +68,7 @@ const TableRow = (props) => {
         return soma
     }
 
-    const handleReceitaChange = (event) => {
+    const handleDespesaChange = (event) => {
 
         event.preventDefault();
 
@@ -76,7 +76,7 @@ const TableRow = (props) => {
 
         const { dataset, value } = event.target
 
-        onReceitaChange(nome, dataset.param, dataset.mes, value)
+        onDespesaChange(nome, dataset.param, dataset.mes, value)
 
     }
 
@@ -125,12 +125,12 @@ const TableRow = (props) => {
                                 {
                                     meses.map(mes => {
                                         let valor = undefined
-                                        const receita = receitasList.find(receita => receita.param === param)
-                                        if (receita === undefined)
+                                        const despesa = despesasList.find(despesa => despesa.param === param)
+                                        if (despesa === undefined)
                                             valor = ''
                                         else
-                                            valor = receita.valores[mes]
-                                        return <td><FormControl type='number' min='0' data-param={param} data-mes={mes} value={valor} onChange={handleReceitaChange}></FormControl></td>
+                                            valor = despesa.valores[mes]
+                                        return <td><FormControl type='number' min='0' data-param={param} data-mes={mes} value={valor} onChange={handleDespesaChange}></FormControl></td>
                                     })
                                 }
                                 <td>{calcularTotal(param)}</td>
@@ -143,12 +143,12 @@ const TableRow = (props) => {
                     {
                         meses.map(mes => {
                             let valor = undefined
-                            const receita = receitasList.find(receita => receita.param === 'obs')
-                            if (receita === undefined)
+                            const despesa = despesasList.find(despesa => despesa.param === 'obs')
+                            if (despesa === undefined)
                                 valor = ''
                             else
-                                valor = receita.valores[mes]
-                            return <td><FormControl as='textarea' style={{ minWidth: '150px' }} data-param='obs' data-mes={mes} value={valor} onChange={handleReceitaChange}></FormControl></td>
+                                valor = despesa.valores[mes]
+                            return <td><FormControl as='textarea' style={{ minWidth: '150px' }} data-param='obs' data-mes={mes} value={valor} onChange={handleDespesaChange}></FormControl></td>
                         })
                     }
                 </tr>

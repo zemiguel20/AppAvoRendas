@@ -4,5 +4,5 @@ build
 data.db
 contracts.json
 properties.json
-receitas.json
+despesas.json
 impostos.json

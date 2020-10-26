@@ -26,20 +26,20 @@ export const saveContracts = (contractList, year) => {
 }
 
 /**
- * Saves the list of receitas in the file
- * @param {Array<object>} receitasList 
+ * Saves the list of despesas in the file
+ * @param {Array<object>} despesasList 
  */
-export const saveReceitas = (receitasList) => {
-    const fileContent = JSON.parse(openFile('receitas'))
-    receitasList.forEach(receita => {
-        const resultIndex = fileContent.receitas.findIndex(el => (el.ano === receita.ano && el.nomePropriedade === receita.nomePropriedade && el.param === receita.param))
+export const saveDespesas = (despesasList) => {
+    const fileContent = JSON.parse(openFile('despesas'))
+    despesasList.forEach(despesa => {
+        const resultIndex = fileContent.despesas.findIndex(el => (el.ano === despesa.ano && el.nomePropriedade === despesa.nomePropriedade && el.param === despesa.param))
         if (resultIndex === -1) {
-            fileContent.receitas.push(receita)
+            fileContent.despesas.push(despesa)
         } else {
-            fileContent.receitas[resultIndex] = receita
+            fileContent.despesas[resultIndex] = despesa
         }
     });
-    fs.writeFileSync(pathFile('receitas'), JSON.stringify(fileContent))
+    fs.writeFileSync(pathFile('despesas'), JSON.stringify(fileContent))
 }
 
 /**
@@ -73,13 +73,13 @@ export const getContractsListByYear = (year) => {
 }
 
 /**
- * Returns the list of receitas of the given year.
+ * Returns the list of despesas of the given year.
  * @param {number} year 
- * @returns {Array<object>} list of receitas
+ * @returns {Array<object>} list of despesas
  */
-export const getReceitasListByYear = (year) => {
-    const fileContent = JSON.parse(openFile('receitas'))
-    return fileContent.receitas.filter(el => el.ano === year)
+export const getDespesasListByYear = (year) => {
+    const fileContent = JSON.parse(openFile('despesas'))
+    return fileContent.despesas.filter(el => el.ano === year)
 }
 
 /**
