@@ -36,7 +36,7 @@ class YearCounter extends React.Component {
 
     render() {
         return (
-            <Form noValidate onSubmit={this.handleSubmit}>
+            <Form noValidate onSubmit={this.handleSubmit} style={{ borderStyle: 'solid', borderColor: '#828282', backgroundColor: '#fafafa', opacity: 0.93 }}>
                 <FormControl size='lg' type='number' min='0' placeholder='Ano' value={this.state.value} onChange={this.handleValueChange}></FormControl>
 
                 { (this.state.disabled && <Button disabled className='btn-outline-primary'>Mudar Ano</Button>)

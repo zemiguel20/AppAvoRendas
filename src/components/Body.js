@@ -12,12 +12,10 @@ import { clone } from '../utils';
 import { RemoveProperty } from './RemoveProperty';
 import _ from 'lodash';
 
-/*
-*
-* ! NOTA ! ---> DESPESAS SUPOSTAMENTE SÃO DESPESAS!!!!!!!!!!!  
-*
-*
-*/
+import path from 'path';
+const pathToImg = path.join(process.cwd(), "assets", "mountains.jpg")
+
+
 class Body extends React.Component {
 
     constructor(props) {
@@ -184,13 +182,13 @@ class Body extends React.Component {
 
     render() {
         return (
-            <Container fluid className='bg-light' style={{ height: '100vh' }}>
+            <Container fluid style={{ height: '100vh', backgroundImage: 'url(' + pathToImg + ')', backgroundSize: 'cover' }}>
                 <Row className='pt-3'>
                     <Col>
                         <YearCounter ano={this.state.year} onYearChange={this.handleYearChange}></YearCounter>
                     </Col>
                     <Col>
-                        <Tabs defaultActiveKey='despesas' id='tabelas'>
+                        <Tabs defaultActiveKey='despesas' id='tabelas' style={{ maxWidth: 'max-content', borderStyle: 'solid', borderColor: '#828282', backgroundColor: '#fafafa', opacity: 0.93 }}>
                             <Tab title='Propriedades' eventKey='despesas' onEnter={() => {
                                 console.log('despesas tab') // TODO - REMOVE DEBUG
                                 this.setState({ tabAtivo: 'despesas' })
@@ -230,7 +228,7 @@ class Body extends React.Component {
 
                     {this.state.tabAtivo === 'contratos' &&
                         <Col>
-                            <Button onClick={this.handleRenovarContratos}>Renovar contratos do ano anterior</Button>
+                            <Button onClick={this.handleRenovarContratos} size='lg' style={{ borderStyle: 'solid', borderColor: '#828282' }}>Renovar contratos do ano anterior</Button>
                         </Col>
                     }
 
@@ -248,7 +246,7 @@ class Body extends React.Component {
 
                 </Row>
 
-                <Row className='mt-3 overflow-auto' style={{ maxHeight: '50%' }}>
+                <Row className='mt-3' style={{ maxHeight: '50%', overflowY: 'auto' }}>
                     <Col>
                         {this.state.tabAtivo === 'contratos' &&
                             <TabelaContratos contractsList={this.state.contractsList} onContractPaymentChange={this.handleContractPaymentChange} onToggleRenovavel={this.handleToggleRenovavel} onContractRemove={this.handleContractRemove}></TabelaContratos>
@@ -270,8 +268,8 @@ export default Body
 
 function SaveButton(props) {
     if (props.unsavedChanges === true) {
-        return <Button className='btn-success' size='lg' onClick={() => props.onClick()}>Guardar</Button>
+        return <Button className='btn-success' size='lg' onClick={() => props.onClick()} style={{ borderStyle: 'solid', borderColor: '#828282' }}>Guardar</Button>
     } else {
-        return <Button disabled className='btn-outline-success' size='lg'>Guardar</Button>
+        return <Button disabled className='btn-outline-success' size='lg' style={{ borderStyle: 'solid', borderColor: '#828282' }}>Guardar</Button>
     }
 }

@@ -59,7 +59,7 @@ const TabelaResultado = (props) => {
     }
 
     return (
-        <Container className='justify-content-center'>
+        <div style={{ width: 'max-content', borderStyle: 'solid', borderColor: '#828282', borderWidth: '4px', overflowX: 'auto', backgroundColor: '#fafafa', opacity: 0.93 }}>
             <Table bordered style={{ width: 'auto' }}>
                 <thead>
                     <tr>
@@ -75,7 +75,7 @@ const TabelaResultado = (props) => {
                         <td>{impostos.ano}</td>
                         <td style={{ backgroundColor: '#d9f7d7' }}>{receitas}</td>
                         <td style={{ backgroundColor: '#f7e3df' }}>{despesas}</td>
-                        <td>{saldo}</td>
+                        <td>{saldo.toFixed(2)}</td>
                     </tr>
                 </tbody>
             </Table>
@@ -90,7 +90,7 @@ const TabelaResultado = (props) => {
 
                 <tbody>
                     <td><FormControl type='number' min='0' max='9999' value={IMI} onChange={onIMIChange}></FormControl></td>
-                    <td>{saldoIMI}</td>
+                    <td>{saldoIMI.toFixed(2)}</td>
                 </tbody>
             </Table>
 
@@ -108,7 +108,7 @@ const TabelaResultado = (props) => {
                     </tr>
                 </tbody>
             </Table>
-        </Container>
+        </div>
     )
 }
 

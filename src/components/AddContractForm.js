@@ -52,7 +52,7 @@ class AddContractForm extends React.Component {
 
     render() {
         return (
-            <Form noValidate onSubmit={this.handleSubmit} style={{ backgroundColor: '#e6f2e1' }}>
+            <Form noValidate onSubmit={this.handleSubmit} style={{ backgroundColor: '#fafafa', opacity: 0.93, borderStyle: 'solid', borderColor: '#828282' }}>
                 <FormLabel>Adicionar contrato</FormLabel>
                 <FormControl type='text' placeholder='Nome inquilino' name='nomeInquilino' onChange={this.handleOnStringChange} value={this.state.nomeInquilino}></FormControl>
                 <FormControl type='number' min='0' placeholder='Valor da renda' name='valorRenda' onChange={this.handleOnStringChange} value={this.state.valorRenda}></FormControl>

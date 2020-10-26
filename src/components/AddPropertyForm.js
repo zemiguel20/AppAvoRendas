@@ -55,7 +55,7 @@ class AddPropertyForm extends React.Component {
 
     render() {
         return (
-            <Form onSubmit={this.handleSubmit} style={{ backgroundColor: '#e6f2e1' }}>
+            <Form onSubmit={this.handleSubmit} style={{ backgroundColor: '#fafafa', opacity: 0.93, borderStyle: 'solid', borderColor: '#828282' }}>
                 <FormGroup>
                     <FormLabel>Adicionar propriedade</FormLabel>
                     <FormControl type='text' placeholder='Nome propriedade' onChange={this.handleOnNameChange} value={this.state.nomeProp}></FormControl>
