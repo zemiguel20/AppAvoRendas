@@ -44,6 +44,15 @@
       "build/**/**/*",
       "node_modules/**/*",
       "./main.js"
+    ],
+    "extraFiles": [
+      {
+        "from": "assets",
+        "to": "assets",
+        "filter": [
+          "**/*"
+        ]
+      }
     ]
   }
 }
