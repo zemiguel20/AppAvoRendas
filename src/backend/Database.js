@@ -46,14 +46,10 @@ export const saveReceitas = (receitasList) => {
  * Saves the impostos
  * @param {object} impostos 
  */
-export const saveImpostos = (impostos) => {
+export const saveImpostos = (imposto) => {
     const fileContent = JSON.parse(openFile('impostos'))
-    const resultIndex = fileContent.impostos.findIndex(el => el.ano === impostos.ano)
-    if (resultIndex === -1) {
-        fileContent.impostos.push(impostos)
-    } else {
-        fileContent.impostos[resultIndex] = impostos
-    }
+    remove(fileContent.impostos, el => el.ano === imposto.ano)
+    fileContent.impostos = concat(fileContent.impostos, imposto)
     fs.writeFileSync(pathFile('impostos'), JSON.stringify(fileContent))
 }
 
