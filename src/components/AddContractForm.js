@@ -32,7 +32,7 @@ class AddContractForm extends React.Component {
         const contrato = {
             ano: this.props.ano,
             nomeInquilino: this.state.nomeInquilino,
-            nomePropriedade: event.target.children[2].value,
+            nomePropriedade: event.target.children[3].value,
             valorRenda: valor,
             renovavel: this.state.renovavel,
             pagamentos: { jan: '', fev: '', mar: '', abr: '', mai: '', jun: '', jul: '', ago: '', set: '', out: '', nov: '', dez: '' }
