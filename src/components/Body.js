@@ -5,13 +5,19 @@ import AddContractForm from './AddContractForm'
 import AddPropertyForm from './AddPropertyForm'
 import TabelaContratos from './TabelaContratos'
 import TabelaPropriedades from "./TabelaPropriedades";
-import { getAllProperties, getContractsListByYear, getReceitasListByYear, saveProperties, saveContracts, saveReceitas } from '../backend/Database';
+import TabelaResultado from './TabelaResultado';
+import { getAllProperties, getContractsListByYear, getReceitasListByYear, saveProperties, saveContracts, saveReceitas, getImpostosByYear, saveImpostos } from '../backend/Database';
 import WarningBanner from './WarningBanner';
 import { clone } from '../utils';
 import { RemoveProperty } from './RemoveProperty';
 import _ from 'lodash';
 
-
+/*
+*
+* ! NOTA ! ---> RECEITAS SUPOSTAMENTE SÃO DESPESAS!!!!!!!!!!!  
+*
+*
+*/
 class Body extends React.Component {
 
     constructor(props) {
@@ -24,6 +30,7 @@ class Body extends React.Component {
             propertiesList: getAllProperties(),
             contractsList: getContractsListByYear(year),
             receitasList: getReceitasListByYear(year),
+            impostos: getImpostosByYear(year),
             unsavedChanges: false
         }
 
@@ -37,6 +44,7 @@ class Body extends React.Component {
         this.handleReceitaChange = this.handleReceitaChange.bind(this)
         this.handleContractRemove = this.handleContractRemove.bind(this)
         this.handlePropertyRemove = this.handlePropertyRemove.bind(this)
+        this.handleImpostosChange = this.handleImpostosChange.bind(this)
     }
 
     handlePropertyListAdd(property) {
@@ -104,7 +112,8 @@ class Body extends React.Component {
         this.setState({
             year: year,
             contractsList: getContractsListByYear(year),
-            receitasList: getReceitasListByYear(year)
+            receitasList: getReceitasListByYear(year),
+            impostos: getImpostosByYear(year)
         })
     }
 
@@ -112,6 +121,7 @@ class Body extends React.Component {
         saveContracts(clone(this.state.contractsList))
         saveProperties(clone(this.state.propertiesList))
         saveReceitas(clone(this.state.receitasList))
+        saveImpostos(clone(this.state.impostos))
         this.setState({ unsavedChanges: false })
     }
 
@@ -163,8 +173,16 @@ class Body extends React.Component {
         _.remove(propertiesList, p => p.nome === nomePropriedade)
         _.remove(receitasList, rec => rec.nomePropriedade === nomePropriedade)
 
-        this.setState({ propertiesList: propertiesList, receitasList: receitasList, unsavedChanges: true })
+        this.setState({ propertiesList: propertiesList, receitasList: receitasList, unsavedChanges: true, msg: null })
 
+    }
+
+    handleImpostosChange(imi, irs) {
+        console.log('IMI:' + imi + ' IRS:' + irs) //TODO - REMOVE DEBUG
+        const impostos = clone(this.state.impostos)
+        impostos.imi = imi
+        impostos.irs = irs
+        this.setState({ impostos: impostos, unsavedChanges: true })
     }
 
     render() {
@@ -188,6 +206,10 @@ class Body extends React.Component {
                             }}>
                             </Tab>
 
+                            <Tab title='Resultado' eventKey='resultado' onEnter={() => {
+                                console.log('resultado tab') //TODO - REMOVE DEBUG
+                                this.setState({ tabAtivo: 'resultado' })
+                            }}></Tab>
 
                         </Tabs>
                     </Col>
@@ -236,6 +258,9 @@ class Body extends React.Component {
                         }
                         {this.state.tabAtivo === 'receitas' &&
                             <TabelaPropriedades propertiesList={this.state.propertiesList} contractsList={this.state.contractsList} receitasList={this.state.receitasList} onReceitaChange={this.handleReceitaChange}></TabelaPropriedades>
+                        }
+                        {this.state.tabAtivo === 'resultado' &&
+                            <TabelaResultado propertiesList={this.state.propertiesList} despesasList={this.state.receitasList} contractsList={this.state.contractsList} impostos={this.state.impostos} onImpostosChange={this.handleImpostosChange}></TabelaResultado>
                         }
                     </Col>
                 </Row>
