@@ -118,7 +118,7 @@ class Body extends React.Component {
     }
 
     handleGuardar() {
-        saveContracts(clone(this.state.contractsList))
+        saveContracts(clone(this.state.contractsList), this.state.year)
         saveProperties(clone(this.state.propertiesList))
         saveReceitas(clone(this.state.receitasList))
         saveImpostos(clone(this.state.impostos))
@@ -156,8 +156,7 @@ class Body extends React.Component {
 
     handleContractRemove(nomeInquilino, nomePropriedade) {
         const contractsList = clone(this.state.contractsList)
-        const index = contractsList.find(el => el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)
-        contractsList.splice(index, 1)
+        _.remove(contractsList, el => el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)
         this.setState({ contractsList: contractsList, unsavedChanges: true })
     }
 

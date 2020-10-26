@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { concat, remove } from 'lodash';
 
 /**
  * Saves the list of properties in the file.
@@ -13,17 +14,14 @@ export const saveProperties = (propertyList) => {
 /**
  * Saves the list of contracts in the file
  * @param {Array<object>} contractList 
+ * @param {number} year 
  */
-export const saveContracts = (contractList) => {
+export const saveContracts = (contractList, year) => {
     const fileContent = JSON.parse(openFile('contracts'))
-    contractList.forEach(contract => {
-        const resultIndex = fileContent.contracts.findIndex(el => (el.ano === contract.ano && el.nomeInquilino === contract.nomeInquilino && el.nomePropriedade === contract.nomePropriedade))
-        if (resultIndex === -1) {
-            fileContent.contracts.push(contract)
-        } else {
-            fileContent.contracts[resultIndex] = contract
-        }
-    });
+
+    remove(fileContent.contracts, el => el.ano === year)
+    fileContent.contracts = concat(fileContent.contracts, contractList)
+
     fs.writeFileSync(pathFile('contracts'), JSON.stringify(fileContent))
 }
 
