@@ -89,7 +89,7 @@ const TabelaResultado = (props) => {
                 </thead>
 
                 <tbody>
-                    <td><FormControl type='number' min='0' max='9999.99' value={IMI} onChange={onIMIChange}></FormControl></td>
+                    <td><FormControl type='number' min='0' max='9999' value={IMI} onChange={onIMIChange}></FormControl></td>
                     <td>{saldoIMI}</td>
                 </tbody>
             </Table>
