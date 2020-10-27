@@ -73,8 +73,8 @@ const TabelaResultado = (props) => {
                 <tbody>
                     <tr>
                         <td>{impostos.ano}</td>
-                        <td style={{ backgroundColor: '#d9f7d7' }}>{receitas}</td>
-                        <td style={{ backgroundColor: '#f7e3df' }}>{despesas}</td>
+                        <td style={{ backgroundColor: '#d9f7d7' }}>{receitas.toFixed(2)}</td>
+                        <td style={{ backgroundColor: '#f7e3df' }}>{despesas.toFixed(2)}</td>
                         <td>{saldo.toFixed(2)}</td>
                     </tr>
                 </tbody>
