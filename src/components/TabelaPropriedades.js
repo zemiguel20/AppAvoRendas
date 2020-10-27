@@ -82,9 +82,9 @@ const TableRow = (props) => {
     const totalReceitas = calcularTotal('rendas')
 
     return (
-        <div style={{ marginBottom: '25px', borderStyle: 'solid', borderColor: '#828282', overflowX: 'auto', backgroundColor: '#fafafa', opacity: 0.93 }}>
-            <Table bordered>
-                <thead>
+        <div style={{ marginBottom: '25px', borderStyle: 'solid', borderColor: 'darkgrey', overflowX: 'auto', backgroundColor: 'whitesmoke', opacity: 0.93 }}>
+            <table>
+                <thead style={{ backgroundColor: 'lightcyan', textAlign: 'center' }}>
                     <tr>
                         <th>Nome</th>
                         <th>Despesas/Receitas</th>
@@ -110,7 +110,7 @@ const TableRow = (props) => {
                                         valor = 0
                                     soma += valor
                                 });
-                                return <td>{soma.toFixed(2)}</td>
+                                return <td style={{ textAlign: 'right' }}>{soma.toFixed(2)}</td>
                             })
                         }
                         <td>{totalReceitas.toFixed(2)}</td>
@@ -128,7 +128,7 @@ const TableRow = (props) => {
                                                 valor = ''
                                             else
                                                 valor = despesa.valores[mes]
-                                            return <td><FormControl type='number' min='0' data-param={param} data-mes={mes} value={valor} onChange={handleDespesaChange}></FormControl></td>
+                                            return <td><input type='number' min='0' max='9999' style={{ width: '100%', textAlign: 'right' }} data-param={param} data-mes={mes} value={valor} onChange={handleDespesaChange}></input></td>
                                         })
                                     }
                                     <td>{calcularTotal(param).toFixed(2)}</td>
@@ -146,18 +146,18 @@ const TableRow = (props) => {
                                     valor = ''
                                 else
                                     valor = despesa.valores[mes]
-                                return <td><FormControl as='textarea' style={{ minWidth: '150px' }} data-param='obs' data-mes={mes} value={valor} onChange={handleDespesaChange}></FormControl></td>
+                                return <td><textarea style={{ width: '100%' }} data-param='obs' data-mes={mes} value={valor} onChange={handleDespesaChange}></textarea></td>
                             })
                         }
                     </tr>
 
                 </tbody>
-            </Table>
+            </table>
 
-            <div style={{ maxWidth: '25%' }}>
-                <div style={{ backgroundColor: '#e3ffd1' }}>{'Receitas: ' + totalReceitas.toFixed(2)}</div>
-                <div style={{ backgroundColor: '#ffc096' }}>{'Despesas: ' + totalDespesas.toFixed(2)}</div>
-                <div style={{ backgroundColor: '#dff0f5' }}>{'Saldo: ' + (totalReceitas - totalDespesas).toFixed(2)}</div>
+            <div style={{ width: '100%' }}>
+                <div style={{ backgroundColor: 'yellowgreen', display: 'inline-block', padding: '15px' }}>{'Receitas: ' + totalReceitas.toFixed(2)}</div>
+                <div style={{ backgroundColor: 'orange', display: 'inline-block', padding: '15px' }}>{'Despesas: ' + totalDespesas.toFixed(2)}</div>
+                <div style={{ backgroundColor: 'skyblue', display: 'inline-block', padding: '15px' }}>{'Saldo: ' + (totalReceitas - totalDespesas).toFixed(2)}</div>
             </div>
         </div>
 

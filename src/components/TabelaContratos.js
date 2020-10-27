@@ -4,11 +4,11 @@ import { Table, Button, FormCheck, FormControl } from 'react-bootstrap';
 class TabelaContratos extends React.Component {
     render() {
         return (
-            <div style={{ marginBottom: '25px', borderStyle: 'solid', borderColor: '#828282', overflowX: 'auto', backgroundColor: '#fafafa', opacity: 0.93 }}>
-                <Table bordered>
-                    <thead>
+            <div style={{ marginBottom: '25px', borderStyle: 'solid', borderColor: 'darkgrey', overflowX: 'auto', backgroundColor: 'whitesmoke', opacity: 0.93 }}>
+                <table>
+                    <thead style={{ backgroundColor: 'lightcyan' }}>
                         <tr>
-                            <th style={{ width: '50px' }}></th>
+                            <th></th>
                             <th>Nome</th>
                             <th>Propridade</th>
                             <th>Renda €</th>
@@ -34,7 +34,7 @@ class TabelaContratos extends React.Component {
                             })
                         }
                     </tbody>
-                </Table>
+                </table>
             </div>
         );
     }
@@ -81,7 +81,7 @@ function ContractTableRow(props) {
             <td> {valorRenda} </td>
             {
                 meses.map(mes => {
-                    return <td> <FormControl type='number' min='0' style={{ minWidth: '105px' }} name={mes} value={pagamentos[mes]} onChange={handleContractPaymentChange}></FormControl> </td>
+                    return <td> <input type='number' min='0' max='9999' name={mes} value={pagamentos[mes]} onChange={handleContractPaymentChange}></input> </td>
                 })
             }
             <td> {calcularPagamentoTotal(props.contrato.pagamentos).toFixed(2)} </td>

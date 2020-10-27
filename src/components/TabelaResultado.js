@@ -59,8 +59,8 @@ const TabelaResultado = (props) => {
     }
 
     return (
-        <div style={{ width: 'max-content', borderStyle: 'solid', borderColor: '#828282', borderWidth: '4px', overflowX: 'auto', backgroundColor: '#fafafa', opacity: 0.93 }}>
-            <Table bordered style={{ width: 'auto' }}>
+        <div style={{ width: 'max-content', borderStyle: 'solid', borderColor: 'darkgrey', borderWidth: '4px', overflowX: 'auto', backgroundColor: 'whitesmoke', opacity: 0.93, padding: '10px', margin: 'auto' }}>
+            <table>
                 <thead>
                     <tr>
                         <th>Ano</th>
@@ -73,14 +73,14 @@ const TabelaResultado = (props) => {
                 <tbody>
                     <tr>
                         <td>{impostos.ano}</td>
-                        <td style={{ backgroundColor: '#d9f7d7' }}>{receitas.toFixed(2)}</td>
-                        <td style={{ backgroundColor: '#f7e3df' }}>{despesas.toFixed(2)}</td>
-                        <td>{saldo.toFixed(2)}</td>
+                        <td style={{ backgroundColor: 'yellowgreen' }}>{receitas.toFixed(2)}</td>
+                        <td style={{ backgroundColor: 'orange' }}>{despesas.toFixed(2)}</td>
+                        <td style={{ backgroundColor: 'skyblue' }}>{saldo.toFixed(2)}</td>
                     </tr>
                 </tbody>
-            </Table>
+            </table>
 
-            <Table bordered style={{ width: 'auto' }}>
+            <table>
                 <thead>
                     <tr>
                         <th>IMI</th>
@@ -89,12 +89,12 @@ const TabelaResultado = (props) => {
                 </thead>
 
                 <tbody>
-                    <td><FormControl type='number' min='0' max='9999' value={IMI} onChange={onIMIChange}></FormControl></td>
+                    <td><input type='number' min='0' max='9999' value={IMI} onChange={onIMIChange}></input></td>
                     <td>{saldoIMI.toFixed(2)}</td>
                 </tbody>
-            </Table>
+            </table>
 
-            <Table bordered style={{ width: 'auto' }}>
+            <table>
                 <thead>
                     <tr>
                         <th>IRS (%)</th>
@@ -103,11 +103,11 @@ const TabelaResultado = (props) => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td><FormControl type='number' min='0' max='100' value={IRS} onChange={onIRSChange}></FormControl></td>
+                        <td><input type='number' min='0' max='100' value={IRS} onChange={onIRSChange}></input></td>
                         <td>{saldoIRS.toFixed(2)}</td>
                     </tr>
                 </tbody>
-            </Table>
+            </table>
         </div>
     )
 }
