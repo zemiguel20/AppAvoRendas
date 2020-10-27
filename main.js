@@ -16,7 +16,10 @@ function createWindow() {
   mainWindow.loadURL(`file://${path.join(__dirname, './build/index.html')}`)
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
+
+  //Set fullscreen
+  mainWindow.maximize()
 }
 
 // This method will be called when Electron has finished
