@@ -1,5 +1,5 @@
 {
-  "name": "app-avo-rendas",
+  "name": "Rendas",
   "version": "1.0.0",
   "description": "Desktop standalone app for managing rent for personal use. Based on Electron, React, Bootstrap, Webpack and Electron-builder",
   "private": "true",
@@ -25,6 +25,7 @@
     "css-loader": "^4.3.0",
     "electron": "^10.1.3",
     "electron-builder": "^22.8.1",
+    "file-loader": "^6.1.1",
     "html-loader": "^1.3.1",
     "html-webpack-plugin": "^4.5.0",
     "style-loader": "^1.2.1",
@@ -45,23 +46,13 @@
       "node_modules/**/*",
       "./main.js"
     ],
-    "extraFiles": [
-      {
-        "from": ".",
-        "to": ".",
-        "filter": [
-          "*.jpg",
-          "*.png"
-        ]
-      }
-    ],
     "win": {
       "target": "nsis",
-      "icon": "icon.png"
+      "icon": "assets/icon.png"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "256x256.png"
+      "icon": "assets/256x256.png"
     }
   }
 }

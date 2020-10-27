@@ -12,10 +12,7 @@ import { clone } from '../utils';
 import { RemoveProperty } from './RemoveProperty';
 import _ from 'lodash';
 
-import path from 'path';
-const pathToImg = path.resolve(process.cwd() + "/mountains.jpg")
-console.log(pathToImg)
-console.log(path.resolve("mountain.jpg"))
+import image from '../../assets/mountains.jpg';
 
 class Body extends React.Component {
 
@@ -177,7 +174,7 @@ class Body extends React.Component {
 
     render() {
         return (
-            <Container fluid style={{ height: '100vh', backgroundImage: `url(${path.resolve("mountains.jpg")})`, backgroundSize: 'cover' }}>
+            <Container fluid style={{ height: '100vh', backgroundImage: `url(${image})`, backgroundSize: 'cover' }}>
                 <Row className='pt-3'>
                     <Col>
                         <YearCounter ano={this.state.year} onYearChange={this.handleYearChange}></YearCounter>
