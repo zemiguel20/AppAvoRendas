@@ -119,6 +119,7 @@ class Body extends React.Component {
             //Apenas adiciona os que ainda não existem no ano atual
             if (result === undefined) {
                 contract.ano = this.state.year
+                contract.pagamentos = { jan: '', fev: '', mar: '', abr: '', mai: '', jun: '', jul: '', ago: '', set: '', out: '', nov: '', dez: '' }
                 contractsList.push(contract)
                 unsavedChanges = true
             }
