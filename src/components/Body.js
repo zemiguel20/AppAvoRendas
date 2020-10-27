@@ -34,7 +34,6 @@ class Body extends React.Component {
         this.handleContractsListAdd = this.handleContractsListAdd.bind(this)
         this.handleContractPaymentChange = this.handleContractPaymentChange.bind(this)
         this.handleGuardar = this.handleGuardar.bind(this)
-        this.handleToggleRenovavel = this.handleToggleRenovavel.bind(this)
         this.handleYearChange = this.handleYearChange.bind(this)
         this.handleRenovarContratos = this.handleRenovarContratos.bind(this)
         this.handleDespesaChange = this.handleDespesaChange.bind(this)
@@ -91,15 +90,6 @@ class Body extends React.Component {
         })
     }
 
-    handleToggleRenovavel(nomeInquilino, nomePropriedade, value) {
-        let contractsList = clone(this.state.contractsList)
-        contractsList.find(el => (el.nomeInquilino === nomeInquilino && el.nomePropriedade === nomePropriedade)).renovavel = value
-        this.setState({
-            contractsList: contractsList,
-            unsavedChanges: true
-        })
-    }
-
     handleYearChange(year) {
         if (this.state.unsavedChanges === true) {
             this.handleGuardar()
@@ -122,10 +112,11 @@ class Body extends React.Component {
 
     handleRenovarContratos() {
         let unsavedChanges = false
-        const renovavelList = getContractsListByYear(this.state.year - 1).filter(el => el.renovavel === true)
+        const lastYearList = getContractsListByYear(this.state.year - 1)
         const contractsList = clone(this.state.contractsList)
-        renovavelList.forEach(contract => {
+        lastYearList.forEach(contract => {
             const result = contractsList.find(el => (el.nomeInquilino === contract.nomeInquilino && el.nomePropriedade === contract.nomePropriedade))
+            //Apenas adiciona os que ainda não existem no ano atual
             if (result === undefined) {
                 contract.ano = this.state.year
                 contractsList.push(contract)

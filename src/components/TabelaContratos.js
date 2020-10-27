@@ -4,12 +4,11 @@ import { Table, Button, FormCheck, FormControl } from 'react-bootstrap';
 class TabelaContratos extends React.Component {
     render() {
         return (
-            <div style={{ marginBottom: '25px', borderStyle: 'solid', borderColor: '#828282', overflowX: 'auto', backgroundColor: '#fafafa', opacity: 0.93  }}>
+            <div style={{ marginBottom: '25px', borderStyle: 'solid', borderColor: '#828282', overflowX: 'auto', backgroundColor: '#fafafa', opacity: 0.93 }}>
                 <Table bordered>
                     <thead>
                         <tr>
                             <th style={{ width: '50px' }}></th>
-                            <th style={{ width: '50px' }}>Renovavel</th>
                             <th>Nome</th>
                             <th>Propridade</th>
                             <th>Renda €</th>
@@ -31,7 +30,7 @@ class TabelaContratos extends React.Component {
                     <tbody>
                         {
                             this.props.contractsList.map((value) => {
-                                return <ContractTableRow contrato={value} onContractPaymentChange={this.props.onContractPaymentChange} onToggleRenovavel={this.props.onToggleRenovavel} onContractRemove={this.props.onContractRemove}></ContractTableRow>
+                                return <ContractTableRow contrato={value} onContractPaymentChange={this.props.onContractPaymentChange} onContractRemove={this.props.onContractRemove}></ContractTableRow>
                             })
                         }
                     </tbody>
@@ -62,13 +61,9 @@ function ContractTableRow(props) {
 
 
     const { contrato, onContractPaymentChange, onContractRemove } = props;
-    const { nomeInquilino, renovavel, nomePropriedade, valorRenda, pagamentos } = contrato;
+    const { nomeInquilino, nomePropriedade, valorRenda, pagamentos } = contrato;
 
     const meses = Object.keys(pagamentos)
-
-    const handleToggleRenovavel = (event) => {
-        props.onToggleRenovavel(nomeInquilino, nomePropriedade, event.target.checked)
-    }
 
     const handleContractPaymentChange = (event) => {
         onContractPaymentChange(nomeInquilino, nomePropriedade, event.target.name, event.target.value)
@@ -81,7 +76,6 @@ function ContractTableRow(props) {
     return (
         <tr>
             <td> <Button variant='outline-danger' onClick={handleContractRemove}>X</Button> </td>
-            <td> <CheckBox checked={renovavel} onToggleRenovavel={handleToggleRenovavel}></CheckBox> </td>
             <td> {nomeInquilino} </td>
             <td> {nomePropriedade} </td>
             <td> {valorRenda} </td>
@@ -93,14 +87,4 @@ function ContractTableRow(props) {
             <td> {calcularPagamentoTotal(props.contrato.pagamentos).toFixed(2)} </td>
         </tr>
     );
-
-
-}
-
-function CheckBox(props) {
-    if (props.checked === true) {
-        return <FormCheck checked type='checkbox' size='lg' onChange={(event) => props.onToggleRenovavel(event)}></FormCheck>
-    } else {
-        return <FormCheck type='checkbox' size='lg' onChange={(event) => props.onToggleRenovavel(event)}></FormCheck>
-    }
 }

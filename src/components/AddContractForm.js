@@ -8,20 +8,14 @@ class AddContractForm extends React.Component {
         super(props)
         this.state = {
             nomeInquilino: '',
-            valorRenda: '',
-            renovavel: false
+            valorRenda: ''
         }
         this.handleOnStringChange = this.handleOnStringChange.bind(this);
-        this.handleOnCheckboxChange = this.handleOnCheckboxChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleOnStringChange(event) {
         this.setState({ [event.target.name]: event.target.value })
-    }
-
-    handleOnCheckboxChange(event) {
-        this.setState({ renovavel: event.target.checked })
     }
 
     handleSubmit(event) {
@@ -32,7 +26,6 @@ class AddContractForm extends React.Component {
             nomeInquilino: this.state.nomeInquilino,
             nomePropriedade: event.target.children[3].value,
             valorRenda: valor,
-            renovavel: this.state.renovavel,
             pagamentos: { jan: '', fev: '', mar: '', abr: '', mai: '', jun: '', jul: '', ago: '', set: '', out: '', nov: '', dez: '' }
         }
 
@@ -40,8 +33,7 @@ class AddContractForm extends React.Component {
 
         this.setState({
             nomeInquilino: '',
-            valorRenda: '',
-            renovavel: false
+            valorRenda: ''
         })
 
     }
@@ -59,7 +51,6 @@ class AddContractForm extends React.Component {
                         })
                     }
                 </FormControl>
-                <FormCheck type='checkbox' label='Contrato renovável' onChange={this.handleOnCheckboxChange}></FormCheck>
                 <Button type='submit'>Adicionar Contrato</Button>
             </Form >
         );
