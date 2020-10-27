@@ -69,6 +69,11 @@ class Body extends React.Component {
             return;
         }
 
+        if (contract.nomePropriedade === "") {
+            this.setState({ msg: "Tem de ser escolhida uma propriedade." })
+            return;
+        }
+
         let contractsList = clone(this.state.contractsList)
         const result = contractsList.find(el =>
             (el.ano === contract.ano
@@ -172,7 +177,7 @@ class Body extends React.Component {
                         <YearCounter ano={this.state.year} onYearChange={this.handleYearChange}></YearCounter>
                     </Col>
                     <Col>
-                        <Tabs defaultActiveKey='despesas' id='tabelas' style={{ maxWidth: 'max-content', borderStyle: 'solid', borderColor: '#828282', backgroundColor: '#fafafa', opacity: 0.93 }}>
+                        <Tabs defaultActiveKey='despesas' id='tabelas' style={{ maxWidth: 'max-content', borderStyle: 'solid', borderColor: 'darkgrey', backgroundColor: 'whitesmoke', opacity: 0.93, margin: 'auto' }}>
                             <Tab title='Propriedades' eventKey='despesas' onEnter={() => {
                                 this.setState({ tabAtivo: 'despesas' })
                             }}>

@@ -84,7 +84,7 @@ const TableRow = (props) => {
     return (
         <div style={{ marginBottom: '25px', borderStyle: 'solid', borderColor: 'darkgrey', overflowX: 'auto', backgroundColor: 'whitesmoke', opacity: 0.93 }}>
             <table>
-                <thead style={{ backgroundColor: 'lightcyan', textAlign: 'center' }}>
+                <thead>
                     <tr>
                         <th>Nome</th>
                         <th>Despesas/Receitas</th>
@@ -128,7 +128,7 @@ const TableRow = (props) => {
                                                 valor = ''
                                             else
                                                 valor = despesa.valores[mes]
-                                            return <td><input type='number' min='0' max='9999' style={{ width: '100%', textAlign: 'right' }} data-param={param} data-mes={mes} value={valor} onChange={handleDespesaChange}></input></td>
+                                            return <td><input type='number' min='0' max='9999' style={{ textAlign: 'right' }} data-param={param} data-mes={mes} value={valor} onChange={handleDespesaChange}></input></td>
                                         })
                                     }
                                     <td>{calcularTotal(param).toFixed(2)}</td>

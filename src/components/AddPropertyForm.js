@@ -50,18 +50,28 @@ class AddPropertyForm extends React.Component {
 
     render() {
         return (
-            <Form onSubmit={this.handleSubmit} style={{ backgroundColor: '#fafafa', opacity: 0.93, borderStyle: 'solid', borderColor: '#828282' }}>
-                <FormGroup>
-                    <FormLabel>Adicionar propriedade</FormLabel>
-                    <FormControl type='text' placeholder='Nome propriedade' onChange={this.handleOnNameChange} value={this.state.nomeProp}></FormControl>
+            <form onSubmit={this.handleSubmit} style={{ backgroundColor: 'whitesmoke', opacity: 0.93, borderStyle: 'solid', borderColor: 'darkgrey' }}>
+                <label>Adicionar propriedade</label>
+                <label>
+                    <input type='text' placeholder='Nome propriedade' onChange={this.handleOnNameChange} value={this.state.nomeProp}></input>
+                </label>
+                <label>
                     <FormCheck checked disabled type='checkbox' label='Rendas'></FormCheck>
+                </label>
+                <label>
                     <FormCheck checked disabled type='checkbox' label='Div'></FormCheck>
+                </label>
+                <label>
                     <FormCheck checked disabled type='checkbox' label='Obs'></FormCheck>
+                </label>
+                <label>
                     <FormCheck type='checkbox' name='luz' label='Luz' onChange={this.handleOnParamChange}></FormCheck>
+                </label>
+                <label>
                     <FormCheck type='checkbox' name='pessoal' label='Pessoal' onChange={this.handleOnParamChange}></FormCheck>
-                    <Button type='submit'>Adicionar Propriedade</Button>
-                </FormGroup>
-            </Form >
+                </label>
+                <Button type='submit'>Adicionar Propriedade</Button>
+            </form >
         );
     }
 }

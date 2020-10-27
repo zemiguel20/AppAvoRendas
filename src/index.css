@@ -10,3 +10,21 @@ th, td {
 table{
     width: 100%;
 }
+
+thead{
+    background-color: lightcyan;
+    text-align: center;
+}
+
+form{
+    padding: 10px;
+}
+
+label{
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+input, select{
+    width: 100%;
+}

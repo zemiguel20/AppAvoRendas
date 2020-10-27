@@ -6,7 +6,7 @@ class TabelaContratos extends React.Component {
         return (
             <div style={{ marginBottom: '25px', borderStyle: 'solid', borderColor: 'darkgrey', overflowX: 'auto', backgroundColor: 'whitesmoke', opacity: 0.93 }}>
                 <table>
-                    <thead style={{ backgroundColor: 'lightcyan' }}>
+                    <thead>
                         <tr>
                             <th></th>
                             <th>Nome</th>
@@ -81,7 +81,7 @@ function ContractTableRow(props) {
             <td> {valorRenda} </td>
             {
                 meses.map(mes => {
-                    return <td> <input type='number' min='0' max='9999' name={mes} value={pagamentos[mes]} onChange={handleContractPaymentChange}></input> </td>
+                    return <td> <input type='number' min='0' max='9999' name={mes} value={pagamentos[mes]} onChange={handleContractPaymentChange} style={{ textAlign: 'right' }}></input> </td>
                 })
             }
             <td> {calcularPagamentoTotal(props.contrato.pagamentos).toFixed(2)} </td>
